@@ -1,10 +1,18 @@
 import {ReactNode} from "react";
-import type {Metadata} from "next";
-import {getI18n} from "@/locales/lib/server";
+import type {Metadata, Viewport} from "next";
+import {getCurrentLocale, getI18n} from "@/locales/lib/server";
+import {I18nProviderClient} from "@/locales/lib/client";
 
 type MainLayoutProps = Readonly<{
   children: ReactNode;
 }>
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+}
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getI18n();
@@ -16,5 +24,11 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function MainLayout({children}: MainLayoutProps) {
-  return children;
+  const locale = await getCurrentLocale();
+
+  return (
+    <I18nProviderClient locale={locale}>
+      {children}
+    </I18nProviderClient>
+  );
 }

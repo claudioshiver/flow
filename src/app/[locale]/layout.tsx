@@ -1,17 +1,16 @@
+'use client';
+
 import {ReactNode} from "react";
-import {I18nProviderClient} from "@/locales/lib/client";
+import {SessionProvider} from "next-auth/react";
 
 type MainLayoutProps = Readonly<{
   children: ReactNode;
-  params: Promise<{ locale: string }>
 }>
 
-export default async function MainLayout({children, params}: MainLayoutProps) {
-  const { locale } = await params
-
+export default function MainLayout({children}: MainLayoutProps) {
   return (
-    <I18nProviderClient locale={locale}>
+    <SessionProvider>
       {children}
-    </I18nProviderClient>
+    </SessionProvider>
   );
 }

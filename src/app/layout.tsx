@@ -1,35 +1,24 @@
 import {ReactNode} from "react";
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import { SessionProvider } from "next-auth/react";
-import "./globals.css";
+import {I18nProviderClient} from "@/locales/lib/client";
+import {geistMono, geistSans} from "@/styles/fonts";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
+import "../styles/globals.css";
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-export const metadata: Metadata = {
-  title: "Flow",
-};
-
-export default function RootLayout({
-  children,
-}: Readonly<{
+type RootLayoutProps = Readonly<{
   children: ReactNode;
-}>) {
+  params: Promise<{ locale: string }>
+}>
+
+export default async function RootLayout({children, params}: RootLayoutProps) {
+  const {locale} = await params
+
   return (
-    <SessionProvider>
-      <html>
-        <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-          {children}
-        </body>
+    <I18nProviderClient locale={locale}>
+      <html lang={locale}>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      {children}
+      </body>
       </html>
-    </SessionProvider>
+    </I18nProviderClient>
   );
 }

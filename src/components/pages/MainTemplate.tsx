@@ -5,7 +5,11 @@ import MainPage from "@/components/pages/MainPage";
 import {useSession} from "next-auth/react";
 
 export function MainTemplate() {
-  const {data: session} = useSession();
+  const {data: session, status} = useSession();
 
-  return !session ? <LoginPage/> : <MainPage/>;
+  return status === 'loading'
+    ? <></>
+    : !session
+      ? <LoginPage/>
+      : <MainPage/>;
 }

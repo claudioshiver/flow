@@ -5,14 +5,11 @@ import "../styles/globals.css";
 
 type RootLayoutProps = Readonly<{
   children: ReactNode;
-  params: Promise<{ locale: string }>;
 }>;
 
-export default async function RootLayout({children, params}: RootLayoutProps) {
-  const {locale} = await params
-
+export default async function RootLayout({children}: RootLayoutProps) {
   return (
-    <html lang={locale}>
+    <html>
     <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
     {children}
     </body>

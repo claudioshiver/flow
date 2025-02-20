@@ -24,6 +24,9 @@ export async function generateMetadata({params}: MainLayoutProps): Promise<Metad
   return {
     title: "Flow",
     description: t('description'),
+    other: {
+      "google-site-verification": "Z8NLIvW2401bzDzN1e3lPLul7sRbAEgUmpDDkvHd1O8"
+    }
   }
 }
 

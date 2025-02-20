@@ -1,6 +1,6 @@
 import {signIn} from "next-auth/react";
 
-const LoginPage = () => {
+export default function LoginPage() {
   return (
     <div>
       <h1 className="mb-8">Login</h1>
@@ -18,5 +18,3 @@ const LoginPage = () => {
     </div>
   );
 }
-
-export default LoginPage;

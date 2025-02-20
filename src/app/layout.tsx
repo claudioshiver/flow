@@ -7,7 +7,7 @@ import "../styles/globals.css";
 type RootLayoutProps = Readonly<{
   children: ReactNode;
   params: Promise<{ locale: string }>
-}>
+}>;
 
 export default async function RootLayout({children, params}: RootLayoutProps) {
   const {locale} = await params

@@ -1,8 +1,8 @@
 'use client';
 
 import {SessionProvider} from "next-auth/react";
-import Head from "next/head";
 import {MainLayout} from "@/components/pages/MainLayout";
+import Head from "next/head";
 
 export default function AppPage() {
   return (

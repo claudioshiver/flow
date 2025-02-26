@@ -3,6 +3,7 @@ import type {Metadata, Viewport} from "next";
 import {getI18n} from "@/locales/lib/server";
 import {I18nProviderClient} from "@/locales/lib/client";
 import {setStaticParamsLocale} from "next-international/server";
+import {APP_NAME} from "@/lib/constants";
 
 type MainLayoutProps = Readonly<{
   children: ReactNode;
@@ -22,7 +23,7 @@ export async function generateMetadata({params}: MainLayoutProps): Promise<Metad
   const t = await getI18n();
 
   return {
-    title: "Flow",
+    title: APP_NAME,
     description: t('description'),
     other: {
       "google-site-verification": "Z8NLIvW2401bzDzN1e3lPLul7sRbAEgUmpDDkvHd1O8"

@@ -2,6 +2,7 @@
 
 import {useI18n} from "@/locales/lib/client";
 import {useSession} from "next-auth/react";
+import {APP_NAME} from "@/lib/constants";
 
 const MainPage = () => {
   const t = useI18n();
@@ -9,9 +10,9 @@ const MainPage = () => {
 
   return (
     <div>
-      <h1 className="mb-8">Flow</h1>
+      <h1 className="mb-8">{APP_NAME}</h1>
       <div>{t('description')}</div>
-      <div>{JSON.stringify(session)}</div>
+      <pre className="max-w-full">{JSON.stringify(session, null, 2)}</pre>
     </div>
   );
 }

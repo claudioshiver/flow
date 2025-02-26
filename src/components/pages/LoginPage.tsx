@@ -1,20 +1,19 @@
 'use client';
 
 import {signIn} from "next-auth/react";
+import {useScopedI18n} from "@/locales/lib/client";
 
 export default function LoginPage() {
+  const t = useScopedI18n('pages.login');
+
   return (
     <div>
-      <h1 className="mb-8">Login</h1>
+      <h1 className="mb-8">{t('title')}</h1>
       <div className="flex flex-col gap-4">
-        <button onClick={() => signIn("google")} className="bg-red-500 text-white px-4 py-2 rounded">
-          Login con Google
-        </button>
-        <button onClick={() => signIn("instagram")} className="bg-pink-500 text-white px-4 py-2 rounded">
-          Login con Instagram
-        </button>
-        <button onClick={() => signIn("facebook")} className="bg-blue-500 text-white px-4 py-2 rounded">
-          Login con Facebook
+        <button
+          onClick={() => signIn("google")}
+          className="bg-red-500 text-white px-4 py-2 rounded">
+          {t('buttons.google')}
         </button>
       </div>
     </div>

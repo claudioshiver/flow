@@ -4,6 +4,8 @@ import {getI18n} from "@/locales/lib/server";
 import {I18nProviderClient} from "@/locales/lib/client";
 import {setStaticParamsLocale} from "next-international/server";
 import {APP_NAME} from "@/lib/constants";
+import AlertsProvider from "@/components/providers/AlertsProvider";
+import SwrProvider from "@/components/providers/SwrProvider";
 
 type MainLayoutProps = Readonly<{
   children: ReactNode;
@@ -36,7 +38,11 @@ export default async function MainLayout({children, params}: MainLayoutProps) {
 
   return (
     <I18nProviderClient locale={locale}>
-      {children}
+      <AlertsProvider>
+        <SwrProvider>
+          {children}
+        </SwrProvider>
+      </AlertsProvider>
     </I18nProviderClient>
   );
 }

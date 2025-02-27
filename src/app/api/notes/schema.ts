@@ -1,6 +1,5 @@
 import * as yup from 'yup';
 import Locale from "@/lib/enums/Locale";
-import {TreeNodeItem} from "@/lib/types/Tree";
 import translations from "@/locales/yup";
 
 export const NoteSchemaLabels = {
@@ -12,7 +11,7 @@ export const NoteSchemaLabels = {
   tags: '',
 };
 
-const NoteSchema = function(
+const NoteSchema = function (
   labels = NoteSchemaLabels,
   locale: Locale = Locale.EN
 ) {

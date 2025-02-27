@@ -16,7 +16,7 @@ const LyricSection = () => {
         if (node.id === lyricId) {
           return node.label;
         }
-        if (node.items) {
+        if ('items' in node && node.items) {
           const found = search(node.items);
           if (found) return found;
         }

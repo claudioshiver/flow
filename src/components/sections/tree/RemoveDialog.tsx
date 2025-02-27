@@ -59,7 +59,7 @@ const RemoveDialog = ({isOpen, onOpenChange, id, type}: RemoveDialogProps) => {
       removeItemAndChildren(clone, id);
       await updateTags(clone);
     }
-  }, [type, id, lyrics, tags]);
+  }, [type, lyrics, removeItemAndChildren, id, updateLyrics, tags, updateTags]);
 
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>

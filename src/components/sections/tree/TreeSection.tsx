@@ -71,7 +71,7 @@ const TreeSection = () => {
         {item.type === "folder" && renderTreeItems(item.items || [], type, depth + 1)}
       </TreeNode>
     ))
-  }, [t, openItems, setLyricId, setTag]);
+  }, [openItems, setLyricId, setTag]);
 
   return (
     <Section

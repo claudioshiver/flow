@@ -79,7 +79,7 @@ const AddDialog = ({isOpen, onOpenChange, parentId, type}: AddDialogProps) => {
 
       setFormData({label: "", type: "leaf"})
     }
-  }, [formData, type, parentId, lyrics, tags]);
+  }, [formData, type, lyrics, addChildToParent, parentId, updateLyrics, tags, updateTags]);
 
   const handleType = useCallback((value: string) => {
     setFormData((prev) => ({

@@ -14,6 +14,8 @@ const usePutTags = function() {
         body: JSON.stringify(body),
       });
 
+      console.log('>>> response', response);
+
       if (!response.ok) {
         const errorBody = await response.json().catch(() => null);
         throw new Error(errorBody);
@@ -26,6 +28,9 @@ const usePutTags = function() {
           ])
         );
       },
+      onError: (error) => {
+        console.log('>>> error', error);
+      }
     });
 }
 

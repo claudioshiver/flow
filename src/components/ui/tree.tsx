@@ -24,12 +24,6 @@ export const TreeNode = ({onToggle, onClick, ...props}: TreeNodeProps) => {
     }
   }, [props.isFolder, props.isOpen, onToggle, onClick]);
 
-  const treeNodeClass = useMemo(() => (
-    cn("flex items-center gap-1 py-1 px-1 rounded-md hover:bg-accent cursor-pointer", {
-      "pl-7": !props.isFolder && props.depth === 2,
-    })
-  ), [props.isFolder, props.depth]);
-
   const arrowClass = useMemo(() => (
     cn("h-4 w-4 shrink-0 transition-transform", {
       "transform rotate-90": props.isOpen
@@ -37,14 +31,14 @@ export const TreeNode = ({onToggle, onClick, ...props}: TreeNodeProps) => {
   ), [props.isOpen]);
 
   const childrenClass = useMemo(() => (
-    cn("ml-2", {
+    cn("ml-4", {
       "hidden": !props.isOpen
     })
   ), [props.isOpen]);
 
   return (
     <li className="select-none">
-      <div onClick={handleClick} className={treeNodeClass}>
+      <div onClick={handleClick} className="flex items-center gap-1 py-1 px-1 rounded-md hover:bg-accent cursor-pointer">
         {props.isFolder
           ? <ChevronRight className={arrowClass}/>
           : <div className="w-4 h-4"/>

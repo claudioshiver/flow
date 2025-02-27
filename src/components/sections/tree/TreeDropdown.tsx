@@ -29,11 +29,17 @@ const TreeDropdown = ({item, type, setAddingItem, setRemovingItem}: TreeDropdown
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         {item.type === "folder" && (
-          <DropdownMenuItem onClick={() => setAddingItem({type, parentId: item.id})}>
+          <DropdownMenuItem onClick={e => {
+            e.stopPropagation()
+            setAddingItem({type, parentId: item.id})
+          }}>
             {t('dropdown.add')}
           </DropdownMenuItem>
         )}
-        <DropdownMenuItem onClick={() => setRemovingItem({type, id: item.id})}>
+        <DropdownMenuItem onClick={e => {
+          e.stopPropagation()
+          setRemovingItem({type, id: item.id})
+        }}>
           {t('dropdown.remove')}
         </DropdownMenuItem>
       </DropdownMenuContent>

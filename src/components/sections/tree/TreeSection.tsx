@@ -86,13 +86,13 @@ const TreeSection = () => {
           <TreeNode
             isFolder
             isOpen={true}
-            label={<AddButton label={t('tree.lyrics')} setAddingTo={setAddingItem}/>}>
+            label={<AddButton label={t('tree.lyrics')} type="lyric" setAddingTo={setAddingItem}/>}>
             {renderTreeItems(lyrics || [], "lyric", 1)}
           </TreeNode>
           <TreeNode
             isFolder
             isOpen={true}
-            label={<AddButton label={t('tree.tags')} setAddingTo={setAddingItem}/>}>
+            label={<AddButton label={t('tree.tags')} type="tag" setAddingTo={setAddingItem}/>}>
             {renderTreeItems(tags || [], "tag", 1)}
           </TreeNode>
         </Tree>

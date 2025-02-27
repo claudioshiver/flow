@@ -77,11 +77,11 @@ const TreeSection = () => {
     <Section
       title={APP_NAME}
       action={
-        <Button size="icon" onClick={() => signOut()}>
+        <Button variant="ghost" size="icon" onClick={() => signOut()}>
           <LogOut className="h-4 w-4"/>
         </Button>
       }>
-      {(isLoadingTags || isLoadingLyrics) && (
+      {!(isLoadingTags || isLoadingLyrics) && (
         <Tree>
           <TreeNode
             isFolder

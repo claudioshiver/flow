@@ -11,13 +11,13 @@ const MainPage = () => {
   const {tag, lyricId} = useAppContext();
 
   const treeClass = useMemo(() => (
-    cn('col-span-6 lg:col-span-1 lg:block', {
+    cn('col-span-6 lg:col-span-1 lg:block lg:border-r', {
       'hidden': tag || lyricId
     })
   ), [tag, lyricId]);
 
   const tagClass = useMemo(() => (
-    cn('col-span-6 lg:col-span-2 lg:block', {
+    cn('col-span-6 lg:col-span-2 lg:block lg:border-r', {
       'hidden': !tag
     })
   ), [tag]);

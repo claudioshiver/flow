@@ -59,7 +59,7 @@ const it = {
       label: 'Nome',
       type: 'Tipo',
       items: 'Elementi',
-      unique: 'Gli ID devono essere univoci'
+      unique: 'I tag devono essere univoci'
     },
     lyric: {
       id: 'ID',

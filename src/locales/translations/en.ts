@@ -59,7 +59,7 @@ const en = {
       label: 'Name',
       type: 'Type',
       items: 'Items',
-      unique: 'IDs must be unique'
+      unique: 'Tags must be unique'
     },
     lyric: {
       id: 'ID',

@@ -13,20 +13,16 @@ import useGetLyrics from "@/lib/hooks/lyrics/useGetLyrics";
 import usePutTags from "@/lib/hooks/tags/usePutTags";
 import usePutLyrics from "@/lib/hooks/lyrics/usePutLyrics";
 import {addChildToParent} from "@/lib/utils/tree";
+import {useTreeContext} from "@/components/providers/TreeProvider";
 
-type AddDialogProps = {
-  isOpen: boolean
-  onOpenChange: (open: boolean) => void
-  parentId: string | null
-  type: 'lyric' | 'tag'
-}
-
-const AddDialog = ({isOpen, onOpenChange, parentId, type}: AddDialogProps) => {
+const AddDialog = () => {
   const {data: tags} = useGetTags();
   const {data: lyrics} = useGetLyrics();
 
   const {trigger: updateTags} = usePutTags();
   const {trigger: updateLyrics} = usePutLyrics();
+
+  const {addingItem, setAddingItem} = useTreeContext();
 
   const t = useScopedI18n('pages.main.dialogs.add');
 
@@ -35,25 +31,29 @@ const AddDialog = ({isOpen, onOpenChange, parentId, type}: AddDialogProps) => {
     type: "leaf" as "folder" | "leaf",
   })
 
+  const onOpenChange = useCallback((open: boolean) => {
+    !open && setAddingItem(null)
+  }, [setAddingItem]);
+
   const handleSubmit = useCallback(async (e: FormEvent) => {
     e.preventDefault()
 
     if (formData.label) {
-      if (type === 'lyric') {
+      if (addingItem?.category! === 'lyric') {
         const clone = JSON.parse(JSON.stringify(lyrics));
-        addChildToParent(clone, parentId, {id: uuid(), ...formData});
+        addChildToParent(clone, addingItem?.item?.id ?? null, {id: uuid(), ...formData});
         await updateLyrics(clone);
-      } else if (type === 'tag') {
+      } else if (addingItem?.category! === 'tag') {
         const clone = JSON.parse(JSON.stringify(tags));
         const id = formData.type === 'folder' ? uuid() : formData.label;
-        addChildToParent(clone, parentId, {id, ...formData});
+        addChildToParent(clone, addingItem?.item?.id ?? null, {id, ...formData});
         await updateTags(clone);
       }
 
       setFormData({label: "", type: "leaf"})
       onOpenChange(false)
     }
-  }, [formData, type, onOpenChange, lyrics, parentId, updateLyrics, tags, updateTags]);
+  }, [formData, addingItem, onOpenChange, lyrics, updateLyrics, tags, updateTags]);
 
   const handleType = useCallback((value: string) => {
     setFormData((prev) => ({
@@ -65,14 +65,14 @@ const AddDialog = ({isOpen, onOpenChange, parentId, type}: AddDialogProps) => {
   const handleName = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setFormData((prev) => ({
       ...prev,
-      label: (type !== 'tag' || prev.type === 'folder')
+      label: (addingItem?.category! !== 'tag' || prev.type === 'folder')
         ? e.target.value
         : String(e.target.value).trim().toLowerCase().replace(/[^a-z0-9]/g, '')
     }))
-  }, [type]);
+  }, [addingItem]);
 
   return (
-    <Dialog open={isOpen} onOpenChange={onOpenChange}>
+    <Dialog open={!!addingItem} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>{t('title')}</DialogTitle>

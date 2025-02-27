@@ -39,8 +39,12 @@ export async function POST(request: NextRequest) {
     unique: t('unique'),
   }, locale as Locale)
 
-  await schema.validate(body)
-  await updateTags(session.user.id, body)
+  try {
+    await schema.validate(body)
+    await updateTags(session.user.id, body)
 
-  return new NextResponse('', {status: 200});
+    return new NextResponse('', {status: 200});
+  } catch(err: any) {
+    return new NextResponse(err, {status: 400});
+  }
 }

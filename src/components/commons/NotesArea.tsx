@@ -1,12 +1,12 @@
 'use client';
 
-import {Badge} from "@/components/ui/badge";
-import {Textarea} from "@/components/ui/textarea";
-import {Button} from "@/components/ui/button";
 import {SendHorizontal} from "lucide-react";
 import * as React from "react";
-import {Note} from "@/lib/types/Note";
 import {useEffect, useRef} from "react";
+import {Textarea} from "@/components/ui/textarea";
+import {Button} from "@/components/ui/button";
+import NoteItem from "@/components/commons/NoteItem";
+import {Note} from "@/lib/types/Note";
 
 type NotesAreaProps = {
   notes?: Note[];
@@ -19,27 +19,14 @@ const NotesArea = ({notes, content, setContent, onSend}: NotesAreaProps) => {
   const endRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    endRef.current?.scrollIntoView({ behavior: "instant" });
+    endRef.current?.scrollIntoView({behavior: "instant"});
   }, [notes]);
 
   return (
     <div className="h-full flex flex-col">
       <div className="flex-1 overflow-y-auto p-2 space-y-2">
         {notes?.map((note, index) => (
-          <div key={index} className="bg-muted py-2 px-4 rounded flex flex-col gap-3">
-            <pre className="whitespace-pre-wrap break-words text-sm font-sans font-normal">
-              {note.content}
-            </pre>
-            {(note.tags?.length > 0) && (
-              <div className="flex flex-wrap gap-2">
-                {note.tags.map((tag, index) => (
-                  <Badge key={index} variant="outline" className="bg-white">
-                    {tag}
-                  </Badge>
-                ))}
-              </div>
-            )}
-          </div>
+          <NoteItem key={index} note={note}/>
         ))}
         <div ref={endRef}/>
       </div>

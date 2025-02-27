@@ -46,10 +46,14 @@ export async function POST(request: NextRequest) {
     tags: t('tags'),
   }, locale as Locale)
 
-  await schema.validate(body)
-  await putNote(session.user.id, body)
+  try {
+    await schema.validate(body)
+    await putNote(session.user.id, body)
 
-  return new NextResponse('', {status: 200});
+    return new NextResponse('', {status: 200});
+  } catch(err: any) {
+    return new NextResponse(err, {status: 400});
+  }
 }
 
 export async function DELETE(request: NextRequest) {

@@ -1,13 +1,17 @@
+'use client';
+
 import {Button} from "@/components/ui/button";
 import {Plus} from "lucide-react";
+import {useTreeContext} from "@/components/providers/TreeProvider";
 
 type AddButtonProps = {
   label: string;
-  type: 'lyric' | 'tag';
-  setAddingTo: (addingTo: {type: "lyric" | "tag", parentId: string | null}) => void;
+  category: 'lyric' | 'tag';
 }
 
-const AddButton = ({label, type, setAddingTo}: AddButtonProps) => {
+const AddButton = ({label, category}: AddButtonProps) => {
+  const {setAddingItem} = useTreeContext();
+
   return (
     <div className="flex justify-between items-center w-full">
       <span className="truncate">{label}</span>
@@ -15,7 +19,7 @@ const AddButton = ({label, type, setAddingTo}: AddButtonProps) => {
         size="icon"
         variant="ghost"
         className="h-6 w-6 hover:bg-accent shrink-0 ml-1"
-        onClick={() => setAddingTo({type, parentId: null})}>
+        onClick={() => setAddingItem({category, item: null})}>
         <Plus className="h-4 w-4"/>
       </Button>
     </div>

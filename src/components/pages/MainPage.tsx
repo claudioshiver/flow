@@ -6,6 +6,7 @@ import TreeSection from "@/components/sections/tree/TreeSection";
 import TagSection from "@/components/sections/tag/TagSection";
 import LyricSection from "@/components/sections/lyric/LyricSection";
 import {useAppContext} from "@/components/providers/AppProvider";
+import TreeProvider from "@/components/providers/TreeProvider";
 
 const MainPage = () => {
   const {tag, lyricId} = useAppContext();
@@ -31,7 +32,9 @@ const MainPage = () => {
   return (
     <div className="grid grid-cols-6">
       <div className={treeClass}>
-        <TreeSection/>
+        <TreeProvider>
+          <TreeSection/>
+        </TreeProvider>
       </div>
       <div className={tagClass}>
         <TagSection/>

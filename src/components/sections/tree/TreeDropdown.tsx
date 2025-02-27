@@ -5,16 +5,18 @@ import {Button} from "@/components/ui/button";
 import {useScopedI18n} from "@/locales/lib/client";
 import {TreeNodeItem} from "@/lib/types/Tree";
 import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger} from "@/components/ui/dropdown-menu";
+import {useTreeContext} from "@/components/providers/TreeProvider";
 
 type TreeDropdownProps = {
+  parentId: string | null
   item: TreeNodeItem<'lyric' | 'tag'>
-  type: 'lyric' | 'tag'
-  setAddingItem: (item: { type: 'lyric' | 'tag', parentId: string | null }) => void
-  setRemovingItem: (item: { type: 'lyric' | 'tag', id: string }) => void
+  category: 'lyric' | 'tag'
 }
 
-const TreeDropdown = ({item, type, setAddingItem, setRemovingItem}: TreeDropdownProps) => {
+const TreeDropdown = ({parentId, item, category}: TreeDropdownProps) => {
   const t = useScopedI18n('pages.main');
+
+  const {setAddingItem, setRemovingItem, setRenamingItem, setMovingItem} = useTreeContext();
 
   return (
     <DropdownMenu>
@@ -31,14 +33,28 @@ const TreeDropdown = ({item, type, setAddingItem, setRemovingItem}: TreeDropdown
         {item.type === "folder" && (
           <DropdownMenuItem onClick={e => {
             e.stopPropagation()
-            setAddingItem({type, parentId: item.id})
+            setAddingItem({category, item: {...item}})
           }}>
             {t('dropdown.add')}
           </DropdownMenuItem>
         )}
+        {category === 'lyric' || item.type === "folder" && (
+          <DropdownMenuItem onClick={e => {
+            e.stopPropagation()
+            setRenamingItem({category, item: {...item}})
+          }}>
+            {t('dropdown.rename')}
+          </DropdownMenuItem>
+        )}
         <DropdownMenuItem onClick={e => {
           e.stopPropagation()
-          setRemovingItem({type, id: item.id})
+          setMovingItem({category, parentId, item: {...item}})
+        }}>
+          {t('dropdown.move')}
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={e => {
+          e.stopPropagation()
+          setRemovingItem({category, item: {...item}})
         }}>
           {t('dropdown.remove')}
         </DropdownMenuItem>

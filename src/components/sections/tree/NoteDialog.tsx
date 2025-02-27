@@ -10,17 +10,14 @@ import useGetTags from "@/lib/hooks/tags/useGetTags";
 import usePutNote from "@/lib/hooks/notes/usePutNote";
 import {Textarea} from "@/components/ui/textarea";
 import {MultiSelect} from "@/components/ui/multi-select";
-import {flattenTreeLeaves} from "@/lib/utils/tree";
+import {flattenTree} from "@/lib/utils/tree";
+import {useTreeContext} from "@/components/providers/TreeProvider";
 
-type NoteDialogProps = {
-  isOpen: boolean
-  onOpenChange: (open: boolean) => void
-}
-
-const NoteDialog = ({isOpen, onOpenChange}: NoteDialogProps) => {
+const NoteDialog = () => {
   const {data: tags} = useGetTags();
-
   const {trigger: putNote} = usePutNote();
+
+  const {isAddingNote, setIsAddingNote} = useTreeContext();
 
   const t = useScopedI18n('pages.main.dialogs.note');
 
@@ -30,7 +27,7 @@ const NoteDialog = ({isOpen, onOpenChange}: NoteDialogProps) => {
   })
 
   const tagsOptions = useMemo(()=> (
-    flattenTreeLeaves(tags || [])
+    flattenTree(tags || [], 'leaf')
   ), [tags])
 
   const handleSubmit = useCallback(async (e: FormEvent) => {
@@ -43,9 +40,9 @@ const NoteDialog = ({isOpen, onOpenChange}: NoteDialogProps) => {
       });
 
       setFormData({content: "", tags: []})
-      onOpenChange(false)
+      setIsAddingNote(false)
     }
-  }, [formData, putNote, onOpenChange]);
+  }, [formData, putNote, setIsAddingNote]);
 
   const handleTags = useCallback((value: string[]) => {
     setFormData((prev) => ({
@@ -62,7 +59,7 @@ const NoteDialog = ({isOpen, onOpenChange}: NoteDialogProps) => {
   }, []);
 
   return (
-    <Dialog open={isOpen} onOpenChange={onOpenChange}>
+    <Dialog open={isAddingNote} onOpenChange={setIsAddingNote}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>{t('title')}</DialogTitle>

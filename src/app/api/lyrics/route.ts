@@ -38,8 +38,12 @@ export async function POST(request: NextRequest) {
     items: t('items'),
   }, locale as Locale)
 
-  await schema.validate(body)
-  await updateLyrics(session.user.id, body)
+  try {
+    await schema.validate(body)
+    await updateLyrics(session.user.id, body)
 
-  return new NextResponse('', {status: 200});
+    return new NextResponse('', {status: 200});
+  } catch(err: any) {
+    return new NextResponse(err, {status: 400});
+  }
 }

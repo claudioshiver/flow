@@ -68,21 +68,89 @@ export const searchItem = function<T extends "lyric" | "tag">(
   return search(items);
 }
 
-export const flattenTreeLeaves = function<T extends 'lyric' | 'tag'>(
+export const renameItem = function<T extends "lyric" | "tag">(
   items: TreeNodeItem<T>[],
-  parentPath: string = ''
+  item: TreeNodeItem<T>,
+): void {
+  const search = (nodes: TreeNodeItem<T>[]) => {
+    for (const node of nodes) {
+      if (node.id === item.id) {
+        node.label = item.label;
+      } else if (('items' in node) && node.items) {
+        search(node.items);
+      }
+    }
+  }
+
+  search(items);
+}
+
+export const flattenTree = function<T extends 'lyric' | 'tag'>(
+  items: TreeNodeItem<T>[],
+  type: 'leaf' | 'folder',
+  parentPath: string = '',
 ): { label: string; value: string }[] {
   let result: { label: string; value: string }[] = [];
 
   for (const node of items) {
-    const currentPath = parentPath ? `${parentPath}/${node.label}` : node.label;
+    const currentPath = parentPath ? `${parentPath} / ${node.label}` : node.label;
 
-    if (node.type === 'leaf') {
+    if (node.type === type) {
       result.push({ label: currentPath, value: node.id });
-    } else if (node.items) {
-      result = result.concat(flattenTreeLeaves(node.items, currentPath));
+    }
+
+    if ('items' in node && node.items) {
+      result = result.concat(flattenTree(node.items, type, currentPath));
     }
   }
 
   return result;
+}
+
+export const moveNode = function<T extends 'lyric' | 'tag'>(
+  items: TreeNodeItem<T>[],
+  nodeId: string,
+  newParentId: string | null
+): boolean {
+  let nodeToMove: TreeNodeItem<T> | null = null;
+
+  function removeNode(nodes: TreeNodeItem<T>[]): boolean {
+    for (let i = 0; i < nodes.length; i++) {
+      const node = nodes[i];
+      if (node.id === nodeId) {
+        nodeToMove = node;
+        nodes.splice(i, 1);
+        return true;
+      }
+      if ('items' in node && node.items) {
+        if (removeNode(node.items)) return true;
+      }
+    }
+    return false;
+  }
+
+  function addNode(nodes: TreeNodeItem<T>[]): boolean {
+    for (const node of nodes) {
+      if (node.id === newParentId && node.type === 'folder') {
+        if (!node.items) node.items = [];
+        node.items.push(nodeToMove!);
+        return true;
+      }
+      if (node.type === 'folder' && node.items) {
+        if (addNode(node.items)) return true;
+      }
+    }
+    return false;
+  }
+
+  if (!removeNode(items)) {
+    return false;
+  }
+
+  if (newParentId === null) {
+    items.push(nodeToMove!);
+    return true;
+  }
+
+  return addNode(items);
 }

@@ -20,6 +20,16 @@ const en = {
           label: 'Name',
           submit: 'Add'
         },
+        rename: {
+          title: 'Rename item',
+          label: 'Name',
+          submit: 'Rename'
+        },
+        move: {
+          title: 'Move item',
+          folder: 'Folder',
+          submit: 'Move'
+        },
         remove: {
           title: 'Remove item',
           description: 'Are you sure you want to remove this item and all its content?',
@@ -37,7 +47,9 @@ const en = {
       },
       dropdown: {
         add: 'Add',
-        remove: 'Remove'
+        remove: 'Remove',
+        rename: 'Rename',
+        move: 'Move'
       }
     }
   },

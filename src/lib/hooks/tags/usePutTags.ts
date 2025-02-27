@@ -20,6 +20,9 @@ const usePutTags = function() {
             'tags.get',
           ])
         );
+      },
+      onError: (err: any) => {
+        console.error('>>>', err);
       }
     });
 }

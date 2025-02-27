@@ -23,10 +23,10 @@ const Alert = (props: AlertProps) => {
     const alertClass = useMemo(() => (
       cn('flex text-gray-800 rounded-md leading-none p-4 gap-3 justify-start items-center border-b-2', {
           'w-full': fullWidth,
-          'border-primary-light bg-primary-lighter': color === 'primary',
-          'border-error-light bg-error-lighter': color === 'error',
-          'border-warning-light bg-warning-lighter': color === 'warning',
-          'border-success-light bg-success-lighter': color === 'success',
+          'border-primary bg-primary-light': color === 'primary',
+          'border-error bg-error-light': color === 'error',
+          'border-warning bg-warning-light': color === 'warning',
+          'border-success bg-success-light': color === 'success',
       })
     ), [fullWidth, color]);
 

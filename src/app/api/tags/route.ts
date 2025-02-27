@@ -7,7 +7,6 @@ import {getTags, updateTags} from "@/app/api/tags/db";
 import TagsSchema from "@/app/api/tags/schema";
 import {getCurrentLocale, getScopedI18n} from "@/locales/lib/server";
 import Locale from "@/lib/enums/Locale";
-import {ValidationError} from "yup";
 
 export async function GET() {
   const session: NextSession | null = await getServerSession(authOptions);

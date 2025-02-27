@@ -17,18 +17,23 @@ const NotesArea = ({notes, content, setContent, onSend}: NotesAreaProps) => {
     <div className="h-full flex flex-col">
       <div className="flex-1 overflow-y-auto p-2 space-y-2">
         {notes?.map((note, index) => (
-          <div key={index} className="bg-muted p-2 rounded flex flex-col gap-2">
-            <p>{note.content}</p>
-            {note.tags.map((tag, index) => (
-              <Badge key={index} variant="secondary">
-                {tag}
-              </Badge>
-            ))}
+          <div key={index} className="bg-muted py-2 px-4 rounded flex flex-col gap-2">
+            <pre className="whitespace-pre-wrap break-words text-base font-normal">
+              {note.content}
+            </pre>
+            <div className="flex flex-wrap gap-2">
+              {note.tags.map((tag, index) => (
+                <Badge key={index} variant="outline">
+                  {tag}
+                </Badge>
+              ))}
+            </div>
           </div>
-        ))}
+          ))}
       </div>
       <div className="border-t pt-4 pb-2 flex space-x-2">
         <Textarea
+          className="h-[38px] -my-px"
           value={content}
           onChange={e => setContent(e.target.value)}/>
         <Button onClick={onSend}>

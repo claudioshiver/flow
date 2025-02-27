@@ -75,6 +75,7 @@ const NoteDialog = ({isOpen, onOpenChange}: NoteDialogProps) => {
               id="content"
               name="content"
               autoComplete="off"
+              className="min-h-[60px]"
               value={formData.content}
               onChange={handleContent}/>
           </div>

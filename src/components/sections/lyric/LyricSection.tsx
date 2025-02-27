@@ -50,11 +50,13 @@ const LyricSection = () => {
           <ChevronLeft className="h-4 w-4"/>
         </Button>
       }>
-      <NotesArea
-        notes={notes}
-        content={content}
-        setContent={setContent}
-        onSend={handleSendMessage}/>
+      {lyricId && (
+        <NotesArea
+          notes={notes}
+          content={content}
+          setContent={setContent}
+          onSend={handleSendMessage}/>
+      )}
     </Section>
   );
 }

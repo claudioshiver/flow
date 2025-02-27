@@ -41,11 +41,13 @@ const TagSection = () => {
           <ChevronLeft className="h-4 w-4"/>
         </Button>
       }>
-      <NotesArea
-        notes={notes}
-        content={content}
-        setContent={setContent}
-        onSend={handleSendMessage}/>
+      {tag && (
+        <NotesArea
+          notes={notes}
+          content={content}
+          setContent={setContent}
+          onSend={handleSendMessage}/>
+      )}
     </Section>
 );
 }

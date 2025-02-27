@@ -58,7 +58,7 @@ const TreeSection = () => {
             <TreeDropdown parentId={parentId} item={item} category={category}/>
           </div>
         }>
-        {item.type === "folder" && renderTreeItems(item.items || [], parentId, category, depth + 1)}
+        {item.type === "folder" && renderTreeItems(item.items || [], item.id, category, depth + 1)}
       </TreeNode>
     ))
   }, [openItems, setLyricId, setOpenItems, setTag]);

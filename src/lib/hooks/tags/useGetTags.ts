@@ -1,11 +1,12 @@
 import useSWR from 'swr';
+import {TreeNodeItem} from "@/lib/types/Tree";
 
 const useGetTags = function() {
   return useSWR(
-    'tags.list',
+    'tags.get',
     async () => {
       const response = await fetch('/api/tags');
-      return response.json();
+      return await response.json() as Promise<TreeNodeItem<'tag'>[]>;
     })
 }
 

@@ -1,5 +1,6 @@
 import type {AuthOptions, Session} from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
+import {NextSession} from "@/lib/types/Session";
 
 const authOptions: AuthOptions = {
   providers: [
@@ -13,7 +14,7 @@ const authOptions: AuthOptions = {
   },
   callbacks: {
     async session({ session, token }) {
-      (session.user as (Session & { id: string })).id = token.sub || '';
+      (session as NextSession).user.id = token.sub || '';
       return session;
     },
   },

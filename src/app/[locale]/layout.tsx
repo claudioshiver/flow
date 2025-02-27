@@ -6,6 +6,7 @@ import {setStaticParamsLocale} from "next-international/server";
 import {APP_NAME} from "@/lib/constants";
 import AlertsProvider from "@/components/providers/AlertsProvider";
 import SwrProvider from "@/components/providers/SwrProvider";
+import AppProvider from "@/components/providers/AppProvider";
 
 type MainLayoutProps = Readonly<{
   children: ReactNode;
@@ -40,7 +41,9 @@ export default async function MainLayout({children, params}: MainLayoutProps) {
     <I18nProviderClient locale={locale}>
       <AlertsProvider>
         <SwrProvider>
-          {children}
+          <AppProvider>
+            {children}
+          </AppProvider>
         </SwrProvider>
       </AlertsProvider>
     </I18nProviderClient>

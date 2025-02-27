@@ -25,6 +25,7 @@
 .idea
 .vscode
 *.pem
+cdk.out
 
 # debug
 npm-debug.log*

@@ -13,7 +13,9 @@ const SwrProvider = function ({children}: { children: ReactNode }) {
   const {addAlert} = useAlertsContext();
 
   const options = useMemo(() => ({
-    onError: (response: ErrorResponse) => {
+    onError: (error: any) => {
+      const response = error.error as ErrorResponse;
+
       const addError = (message: string) => addAlert({
         message,
         type: 'error',

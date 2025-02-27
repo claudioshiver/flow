@@ -38,7 +38,7 @@ const TreeDropdown = ({parentId, item, category}: TreeDropdownProps) => {
             {t('dropdown.add')}
           </DropdownMenuItem>
         )}
-        {category === 'lyric' || item.type === "folder" && (
+        {(category === 'lyric' || item.type === "folder") && (
           <DropdownMenuItem onClick={e => {
             e.stopPropagation()
             setRenamingItem({category, item: {...item}})

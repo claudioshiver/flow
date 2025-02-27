@@ -32,7 +32,7 @@ const MoveDialog = () => {
   const foldersOptions = useMemo(() => {
     const items = movingItem?.category === 'lyric' ? lyrics : tags;
     const label = movingItem?.category === 'lyric' ? tc('lyrics') : tc('tags');
-    return [{label, value: ''}, ...flattenTree(items || [], 'folder')]
+    return [{label, value: ' '}, ...flattenTree(items || [], 'folder')]
   }, [movingItem?.category, lyrics, tags, tc])
 
   const handleSubmit = useCallback(async (e: FormEvent) => {
@@ -54,10 +54,7 @@ const MoveDialog = () => {
   const handleFolder = useCallback((value: string) => {
     setMovingItem({
       ...movingItem!,
-      parentId: value || null,
-      item: {
-        ...movingItem?.item!,
-      }
+      parentId: value.trim() || null,
     })
   }, [movingItem, setMovingItem]);
 
@@ -71,7 +68,7 @@ const MoveDialog = () => {
           <div className="grid gap-2">
             <Label htmlFor="tags">{t('folder')}</Label>
             <SingleSelect
-              value={movingItem?.parentId || ''}
+              value={movingItem?.parentId || ' '}
               onChange={handleFolder}
               options={foldersOptions}/>
           </div>

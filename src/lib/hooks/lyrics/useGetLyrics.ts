@@ -8,8 +8,7 @@ const useGetLyrics = function() {
       const response = await fetch('/api/lyrics');
 
       if (!response.ok) {
-        const errorBody = await response.json();
-        throw new Error(errorBody);
+        throw await response.json();
       }
 
       return await response.json() as Promise<TreeNodeItem<'lyric'>[]>;

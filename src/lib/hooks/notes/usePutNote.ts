@@ -15,8 +15,7 @@ const usePutNote = function() {
       });
 
       if (!response.ok) {
-        const errorBody = await response.json();
-        throw new Error(errorBody);
+        throw await response.json();
       }
     }, {
       onSuccess: () => {

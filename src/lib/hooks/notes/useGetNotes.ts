@@ -18,8 +18,7 @@ const useGetNotes = function (
       const response = await fetch(`/api/notes?${search.toString()}`);
 
       if (!response.ok) {
-        const errorBody = await response.json();
-        throw new Error(errorBody);
+        throw await response.json();
       }
 
       return await response.json() as Promise<Note[]>;

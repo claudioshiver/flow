@@ -10,9 +10,9 @@ import {Button} from "@/components/ui/button";
 import {useScopedI18n} from "@/locales/lib/client";
 import useGetTags from "@/lib/hooks/tags/useGetTags";
 import useGetLyrics from "@/lib/hooks/lyrics/useGetLyrics";
-import {TreeNodeItem, TreeNodeFolder} from "@/lib/types/Tree";
 import usePutTags from "@/lib/hooks/tags/usePutTags";
 import usePutLyrics from "@/lib/hooks/lyrics/usePutLyrics";
+import {addChildToParent} from "@/lib/utils/tree";
 
 type AddDialogProps = {
   isOpen: boolean
@@ -35,34 +35,6 @@ const AddDialog = ({isOpen, onOpenChange, parentId, type}: AddDialogProps) => {
     type: "leaf" as "folder" | "leaf",
   })
 
-  const addChildToParent = useCallback(<T extends "lyric" | "tag">(
-    items: TreeNodeItem<T>[],
-    parentId: string | null,
-    item: TreeNodeItem<T>
-  ) => {
-    if (parentId === null) {
-      items.push(item);
-      return true;
-    }
-
-    const searchAndAdd = (nodes: TreeNodeItem<T>[]): boolean => {
-      for (const node of nodes) {
-        if (node.id === parentId) {
-          if (!('items' in node) || !node.items) (node as TreeNodeFolder<T>).items = [];
-          (node as TreeNodeFolder<T>).items?.push(item);
-          return true;
-        }
-        if (('items' in node) && node.items) {
-          const added = searchAndAdd(node.items);
-          if (added) return true;
-        }
-      }
-      return false;
-    }
-
-    return searchAndAdd(items);
-  }, []);
-
   const handleSubmit = useCallback(async (e: FormEvent) => {
     e.preventDefault()
 
@@ -79,7 +51,7 @@ const AddDialog = ({isOpen, onOpenChange, parentId, type}: AddDialogProps) => {
 
       setFormData({label: "", type: "leaf"})
     }
-  }, [formData, type, lyrics, addChildToParent, parentId, updateLyrics, tags, updateTags]);
+  }, [formData, type, lyrics, parentId, updateLyrics, tags, updateTags]);
 
   const handleType = useCallback((value: string) => {
     setFormData((prev) => ({

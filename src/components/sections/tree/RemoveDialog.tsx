@@ -6,9 +6,9 @@ import {Button} from "@/components/ui/button";
 import {useScopedI18n} from "@/locales/lib/client";
 import useGetTags from "@/lib/hooks/tags/useGetTags";
 import useGetLyrics from "@/lib/hooks/lyrics/useGetLyrics";
-import {TreeNodeFolder, TreeNodeItem} from "@/lib/types/Tree";
 import usePutTags from "@/lib/hooks/tags/usePutTags";
 import usePutLyrics from "@/lib/hooks/lyrics/usePutLyrics";
+import {removeItemAndChildren} from "@/lib/utils/tree";
 
 type RemoveDialogProps = {
   isOpen: boolean
@@ -26,27 +26,6 @@ const RemoveDialog = ({isOpen, onOpenChange, id, type}: RemoveDialogProps) => {
 
   const t = useScopedI18n('pages.main.dialogs.remove');
 
-  const removeItemAndChildren = useCallback(<T extends "lyric" | "tag">(
-    items: TreeNodeItem<T>[],
-    id: string,
-  ) => {
-    const searchAndRemove = (nodes: TreeNodeItem<T>[]): boolean => {
-      for (let i = 0; i < nodes.length; i++) {
-        if (nodes[i].id === id) {
-          nodes.splice(i, 1);
-          return true;
-        }
-        if (('items' in nodes[i]) && (nodes[i] as TreeNodeFolder<T>).items) {
-          const removed = searchAndRemove((nodes[i] as TreeNodeFolder<T>).items!);
-          if (removed) return true;
-        }
-      }
-      return false;
-    }
-
-    return searchAndRemove(items);
-  }, []);
-
   const handleSubmit = useCallback(async (e: FormEvent) => {
     e.preventDefault()
 
@@ -59,7 +38,7 @@ const RemoveDialog = ({isOpen, onOpenChange, id, type}: RemoveDialogProps) => {
       removeItemAndChildren(clone, id);
       await updateTags(clone);
     }
-  }, [type, lyrics, removeItemAndChildren, id, updateLyrics, tags, updateTags]);
+  }, [type, lyrics, id, updateLyrics, tags, updateTags]);
 
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>

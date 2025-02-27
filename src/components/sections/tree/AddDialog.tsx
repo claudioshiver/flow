@@ -77,7 +77,7 @@ const AddDialog = ({isOpen, onOpenChange, parentId, type}: AddDialogProps) => {
         <DialogHeader>
           <DialogTitle>{t('title')}</DialogTitle>
         </DialogHeader>
-        <form onSubmit={handleSubmit} className="grid gap-4 py-4">
+        <form onSubmit={handleSubmit} className="grid gap-4 pt-4">
           <RadioGroup
             name="type"
             className="flex gap-4 justify-start items-center"

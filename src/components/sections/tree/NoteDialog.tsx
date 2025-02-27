@@ -67,7 +67,7 @@ const NoteDialog = ({isOpen, onOpenChange}: NoteDialogProps) => {
         <DialogHeader>
           <DialogTitle>{t('title')}</DialogTitle>
         </DialogHeader>
-        <form onSubmit={handleSubmit} className="grid gap-4 py-4">
+        <form onSubmit={handleSubmit} className="grid gap-4 pt-4">
           <div className="grid gap-2">
             <Label htmlFor="content">{t('content')}</Label>
             <Textarea

@@ -48,7 +48,7 @@ const RemoveDialog = ({isOpen, onOpenChange, id, type}: RemoveDialogProps) => {
         <DialogHeader>
           <DialogTitle>{t('title')}</DialogTitle>
         </DialogHeader>
-        <form onSubmit={handleSubmit} className="grid gap-4 py-4">
+        <form onSubmit={handleSubmit} className="grid gap-4 pt-4">
           <p>{t('description')}</p>
           <Button type="submit">{t('submit')}</Button>
         </form>

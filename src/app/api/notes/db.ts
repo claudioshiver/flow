@@ -21,6 +21,7 @@ function mapNotes(items: Note[], response: QueryCommandOutput) {
       tags: item.tags
         .split("|")
         .map(tag => tag.replaceAll("|", ""))
+        .filter(Boolean)
     }) as Note) || []
   ];
 }
@@ -39,7 +40,7 @@ export async function getNotesByTag(userId: string, tag: string) {
         ":uid": {S: userId},
         ":tag": {S: `|${tag}|`}
       },
-      ScanIndexForward: false, // DESC
+      ScanIndexForward: true, // ASC
       ExclusiveStartKey: lastEvaluatedKey
     });
 

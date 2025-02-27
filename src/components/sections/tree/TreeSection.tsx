@@ -83,7 +83,7 @@ const TreeSection = () => {
           <LogOut className="h-4 w-4"/>
         </Button>
       }>
-      <div className="flex flex-col">
+      <div className="h-full flex flex-col">
         <div className="flex-1 overflow-y-auto">
           {!(isLoadingTags || isLoadingLyrics) && (
             <Tree>
@@ -102,7 +102,7 @@ const TreeSection = () => {
             </Tree>
           )}
         </div>
-        <div className="border-t p-2">
+        <div className="border-t pt-4 pb-2">
           <Button
             className="w-full"
             onClick={() => setIsAddingNote(true)}>

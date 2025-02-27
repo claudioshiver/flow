@@ -55,13 +55,13 @@ export function MultiSelect({onChange, ...props}: MultiSelectProps) {
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
-        <div className="relative flex min-h-10 w-[300px] cursor-pointer items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background">
+        <div className="w-full relative flex min-h-10 cursor-pointer items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background">
           <div className="flex flex-wrap gap-1">
             {props.selected.length > 0 ? (
               props.selected.map((value) => {
                 const selectedOption = props.options.find((option) => option.value === value)
                 return (
-                  <Badge key={value} variant="secondary" className="mr-1 mb-1">
+                  <Badge key={value} variant="secondary">
                     {selectedOption?.label}
                     <button
                       className="ml-1 rounded-full outline-none ring-offset-background focus:ring-2 focus:ring-ring focus:ring-offset-2"
@@ -78,7 +78,7 @@ export function MultiSelect({onChange, ...props}: MultiSelectProps) {
           </div>
         </div>
       </PopoverTrigger>
-      <PopoverContent className="w-[300px] p-0" align="start">
+      <PopoverContent className="w-full p-0" align="start">
         <Command>
           <CommandInput placeholder={props.searchPlaceholder}/>
           <CommandList>

@@ -45,9 +45,10 @@ export const TreeNode = ({onToggle, onClick, ...props}: TreeNodeProps) => {
   return (
     <li className="select-none">
       <div onClick={handleClick} className={treeNodeClass}>
-        {props.isFolder && (
-          <ChevronRight className={arrowClass}/>
-        )}
+        {props.isFolder
+          ? <ChevronRight className={arrowClass}/>
+          : <div className="w-4 h-4"/>
+        }
         {props.isFolder
           ? <Folder className="h-4 w-4 shrink-0"/>
           : <File className="h-4 w-4 shrink-0"/>

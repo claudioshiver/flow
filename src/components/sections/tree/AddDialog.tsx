@@ -50,8 +50,9 @@ const AddDialog = ({isOpen, onOpenChange, parentId, type}: AddDialogProps) => {
       }
 
       setFormData({label: "", type: "leaf"})
+      onOpenChange(false)
     }
-  }, [formData, type, lyrics, parentId, updateLyrics, tags, updateTags]);
+  }, [formData, type, onOpenChange, lyrics, parentId, updateLyrics, tags, updateTags]);
 
   const handleType = useCallback((value: string) => {
     setFormData((prev) => ({
@@ -76,28 +77,27 @@ const AddDialog = ({isOpen, onOpenChange, parentId, type}: AddDialogProps) => {
           <DialogTitle>{t('title')}</DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="grid gap-4 py-4">
-          {!parentId && (
-            <RadioGroup
-              name="type"
-              className="flex gap-4 justify-start items-center"
-              value={formData.type}
-              onValueChange={handleType}>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="leaf" id="leaf"/>
-                <Label htmlFor="item">{t('leaf')}</Label>
-              </div>
-              <div className="flex items-center space-x-2">
-                <RadioGroupItem value="folder" id="folder"/>
-                <Label htmlFor="folder">{t('folder')}</Label>
-              </div>
-            </RadioGroup>
-          )}
+          <RadioGroup
+            name="type"
+            className="flex gap-4 justify-start items-center"
+            value={formData.type}
+            onValueChange={handleType}>
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="leaf" id="leaf"/>
+              <Label htmlFor="item">{t('leaf')}</Label>
+            </div>
+            <div className="flex items-center space-x-2">
+              <RadioGroupItem value="folder" id="folder"/>
+              <Label htmlFor="folder">{t('folder')}</Label>
+            </div>
+          </RadioGroup>
           <div className="grid gap-2">
             <Label htmlFor="label">{t('label')}</Label>
             <Input
               autoFocus
               id="label"
               name="label"
+              autoComplete="off"
               value={formData.label}
               onChange={handleName}/>
           </div>

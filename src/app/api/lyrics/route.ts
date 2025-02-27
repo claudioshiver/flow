@@ -7,6 +7,7 @@ import {getLyrics, updateLyrics} from "@/app/api/lyrics/db";
 import LyricsSchema from "@/app/api/lyrics/schema";
 import {getCurrentLocale, getScopedI18n} from "@/locales/lib/server";
 import Locale from "@/lib/enums/Locale";
+import {ValidationError} from "yup";
 
 export async function GET() {
   const session: NextSession | null = await getServerSession(authOptions);
@@ -44,6 +45,6 @@ export async function POST(request: NextRequest) {
 
     return new NextResponse('', {status: 200});
   } catch(err: any) {
-    return new NextResponse(err, {status: 400});
+    return new NextResponse({...err}, {status: 400});
   }
 }

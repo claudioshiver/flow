@@ -45,6 +45,6 @@ export async function POST(request: NextRequest) {
 
     return new NextResponse('', {status: 200});
   } catch(err: any) {
-    return new NextResponse(err, {status: 400});
+    return new NextResponse({...err}, {status: 400});
   }
 }

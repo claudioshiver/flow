@@ -36,6 +36,7 @@ export async function POST(request: NextRequest) {
     label: t('label'),
     type: t('type'),
     items: t('items'),
+    unique: t('unique'),
   }, locale as Locale)
 
   await schema.validate(body)

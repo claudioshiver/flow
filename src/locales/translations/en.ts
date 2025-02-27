@@ -24,6 +24,15 @@ const en = {
           title: 'Remove item',
           description: 'Are you sure you want to remove this item and all its content?',
           submit: 'Remove'
+        },
+        note: {
+          title: 'Add note',
+          content: 'Content',
+          tags: 'Tags',
+          submit: 'Add',
+          placeholder: 'Select tags',
+          searchPlaceholder: 'Search tags',
+          emptyMessage: 'No tags found'
         }
       },
       dropdown: {
@@ -37,7 +46,8 @@ const en = {
       id: 'ID',
       label: 'Name',
       type: 'Type',
-      items: 'Items'
+      items: 'Items',
+      unique: 'IDs must be unique'
     },
     lyric: {
       id: 'ID',

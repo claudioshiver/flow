@@ -6,20 +6,20 @@ import {createContext, useContext, useMemo, useState} from 'react';
 export type AppContextType = {
   tag?: string,
   lyricId?: string,
-  setTag: (tag: string) => void,
-  setLyricId: (lyricId: string) => void,
+  setTag: (tag?: string) => void,
+  setLyricId: (lyricId?: string) => void,
 }
 
 const AppContext = createContext<AppContextType>({
-  tag: '',
-  lyricId: '',
+  tag: undefined,
+  lyricId: undefined,
   setTag: () => undefined,
   setLyricId: () => undefined,
 });
 
 const AppProvider = function ({children}: { children: ReactNode }) {
-  const [tag, setTag] = useState('');
-  const [lyricId, setLyricId] = useState('');
+  const [tag, setTag] = useState<string | undefined>();
+  const [lyricId, setLyricId] = useState<string | undefined>();
 
   const context = useMemo(() => ({
     tag,

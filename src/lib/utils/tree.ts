@@ -67,3 +67,22 @@ export const searchItem = function<T extends "lyric" | "tag">(
 
   return search(items);
 }
+
+export const flattenTreeLeaves = function<T extends 'lyric' | 'tag'>(
+  items: TreeNodeItem<T>[],
+  parentPath: string = ''
+): { label: string; value: string }[] {
+  let result: { label: string; value: string }[] = [];
+
+  for (const node of items) {
+    const currentPath = parentPath ? `${parentPath}/${node.label}` : node.label;
+
+    if (node.type === 'leaf') {
+      result.push({ label: currentPath, value: node.id });
+    } else if (node.items) {
+      result = result.concat(flattenTreeLeaves(node.items, currentPath));
+    }
+  }
+
+  return result;
+}

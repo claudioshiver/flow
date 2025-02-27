@@ -8,6 +8,7 @@ export const TagsSchemaLabels = {
   label: '',
   type: '',
   items: '',
+  unique: '',
 };
 
 const TagsSchema = function(
@@ -15,6 +16,19 @@ const TagsSchema = function(
   locale: Locale = Locale.EN
 ) {
   yup.setLocale(translations[locale] as any);
+
+  const uniqueIds = (nodes: any[], ids = new Set<string>()): boolean => {
+    for (const node of nodes) {
+      if (ids.has(node.id)) {
+        return false;
+      }
+      ids.add(node.id);
+      if (node.items) {
+        if (!uniqueIds(node.items, ids)) return false;
+      }
+    }
+    return true;
+  }
 
   const treeNodeSchema: yup.Lazy<TreeNodeItem<'tag'>> = yup.lazy(() =>
     yup.object({
@@ -27,7 +41,12 @@ const TagsSchema = function(
     })
   );
 
-  return yup.array().of(treeNodeSchema).required();
+  return yup.array()
+    .of(treeNodeSchema)
+    .required()
+    .test("unique-ids", labels.unique, (nodes) =>
+      nodes ? uniqueIds(nodes) : true
+    );
 };
 
 export type TagsSchemaType = yup.InferType<ReturnType<typeof TagsSchema>>;

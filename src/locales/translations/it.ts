@@ -24,6 +24,15 @@ const it = {
           title: 'Rimuovi elemento',
           description: 'Sei sicuro di voler rimuovere questo elemento e tutto il suo contenuto?',
           submit: 'Rimuovi'
+        },
+        note: {
+          title: 'Aggiungi nota',
+          content: 'Contenuto',
+          tags: 'Tags',
+          submit: 'Aggiungi',
+          placeholder: 'Seleziona tags',
+          searchPlaceholder: 'Cerca tags',
+          emptyMessage: 'Nessun tag trovato'
         }
       },
       dropdown: {
@@ -37,7 +46,8 @@ const it = {
       id: 'ID',
       label: 'Nome',
       type: 'Tipo',
-      items: 'Elementi'
+      items: 'Elementi',
+      unique: 'Gli ID devono essere univoci'
     },
     lyric: {
       id: 'ID',

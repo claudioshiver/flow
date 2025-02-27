@@ -45,7 +45,8 @@ const AddDialog = ({isOpen, onOpenChange, parentId, type}: AddDialogProps) => {
         await updateLyrics(clone);
       } else if (type === 'tag') {
         const clone = JSON.parse(JSON.stringify(tags));
-        addChildToParent(clone, parentId, {id: formData.label, ...formData});
+        const id = formData.type === 'folder' ? uuid() : formData.label;
+        addChildToParent(clone, parentId, {id, ...formData});
         await updateTags(clone);
       }
 
@@ -64,9 +65,9 @@ const AddDialog = ({isOpen, onOpenChange, parentId, type}: AddDialogProps) => {
   const handleName = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setFormData((prev) => ({
       ...prev,
-      label: type === 'tag'
-        ? String(e.target.value).trim().toLowerCase().replace(/[^a-z0-9]/g, '')
-        : e.target.value
+      label: (type !== 'tag' || prev.type === 'folder')
+        ? e.target.value
+        : String(e.target.value).trim().toLowerCase().replace(/[^a-z0-9]/g, '')
     }))
   }, [type]);
 

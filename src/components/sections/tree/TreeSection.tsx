@@ -16,6 +16,7 @@ import {useAppContext} from "@/components/providers/AppProvider";
 import AddButton from "@/components/sections/tree/AddButton";
 import RemoveDialog from "@/components/sections/tree/RemoveDialog";
 import TreeDropdown from "@/components/sections/tree/TreeDropdown";
+import NoteDialog from "@/components/sections/tree/NoteDialog";
 
 const TreeSection = () => {
   const {data: tags, isLoading: isLoadingTags} = useGetTags();
@@ -26,6 +27,7 @@ const TreeSection = () => {
   const t = useScopedI18n('pages.main');
 
   const [openItems, setOpenItems] = useState<Record<string, boolean>>({});
+  const [isAddingNote, setIsAddingNote] = useState(false);
 
   const [removingItem, setRemovingItem] = useState<{
     type: "lyric" | "tag"
@@ -76,27 +78,38 @@ const TreeSection = () => {
   return (
     <Section
       title={APP_NAME}
-      action={
+      after={
         <Button variant="ghost" size="icon" onClick={() => signOut()}>
           <LogOut className="h-4 w-4"/>
         </Button>
       }>
-      {!(isLoadingTags || isLoadingLyrics) && (
-        <Tree>
-          <TreeNode
-            isFolder
-            isOpen={true}
-            label={<AddButton label={t('tree.lyrics')} type="lyric" setAddingTo={setAddingItem}/>}>
-            {renderTreeItems(lyrics || [], "lyric", 1)}
-          </TreeNode>
-          <TreeNode
-            isFolder
-            isOpen={true}
-            label={<AddButton label={t('tree.tags')} type="tag" setAddingTo={setAddingItem}/>}>
-            {renderTreeItems(tags || [], "tag", 1)}
-          </TreeNode>
-        </Tree>
-      )}
+      <div className="flex flex-col">
+        <div className="flex-1 overflow-y-auto">
+          {!(isLoadingTags || isLoadingLyrics) && (
+            <Tree>
+              <TreeNode
+                isFolder
+                isOpen={true}
+                label={<AddButton label={t('tree.lyrics')} type="lyric" setAddingTo={setAddingItem}/>}>
+                {renderTreeItems(lyrics || [], "lyric", 1)}
+              </TreeNode>
+              <TreeNode
+                isFolder
+                isOpen={true}
+                label={<AddButton label={t('tree.tags')} type="tag" setAddingTo={setAddingItem}/>}>
+                {renderTreeItems(tags || [], "tag", 1)}
+              </TreeNode>
+            </Tree>
+          )}
+        </div>
+        <div className="border-t p-2">
+          <Button
+            className="w-full"
+            onClick={() => setIsAddingNote(true)}>
+            {t('dialogs.note.title')}
+          </Button>
+        </div>
+      </div>
 
       <AddDialog
         isOpen={!!addingItem}
@@ -109,6 +122,10 @@ const TreeSection = () => {
         type={removingItem?.type!}
         id={removingItem?.id!}
         onOpenChange={open => !open && setRemovingItem(null)}/>
+
+      <NoteDialog
+        isOpen={isAddingNote}
+        onOpenChange={setIsAddingNote}/>
     </Section>
   );
 }

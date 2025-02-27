@@ -9,10 +9,15 @@ const usePutLyrics = function() {
   return useSWRMutation(
     'lyrics.put',
     async (_, { arg: body }: { arg: LyricsSchemaType }) => {
-      await fetch('/api/lyrics', {
+      const response = await fetch('/api/lyrics', {
         method: 'POST',
         body: JSON.stringify(body),
       });
+
+      if (!response.ok) {
+        const errorBody = await response.json().catch(() => null);
+        throw new Error(errorBody);
+      }
     }, {
       onSuccess: () => {
         mutate(

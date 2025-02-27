@@ -6,6 +6,12 @@ const useGetTags = function() {
     'tags.get',
     async () => {
       const response = await fetch('/api/tags');
+
+      if (!response.ok) {
+        const errorBody = await response.json().catch(() => null);
+        throw new Error(errorBody);
+      }
+
       return await response.json() as Promise<TreeNodeItem<'tag'>[]>;
     })
 }

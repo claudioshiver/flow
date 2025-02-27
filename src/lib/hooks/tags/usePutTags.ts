@@ -9,10 +9,15 @@ const usePutTags = function() {
   return useSWRMutation(
     'tags.put',
     async (_, { arg: body }: { arg: TagsSchemaType }) => {
-      await fetch('/api/tags', {
+      const response = await fetch('/api/tags', {
         method: 'POST',
         body: JSON.stringify(body),
       });
+
+      if (!response.ok) {
+        const errorBody = await response.json().catch(() => null);
+        throw new Error(errorBody);
+      }
     }, {
       onSuccess: () => {
         mutate(
@@ -21,9 +26,6 @@ const usePutTags = function() {
           ])
         );
       },
-      onError: (err: any) => {
-        console.error('>>>', err);
-      }
     });
 }
 

@@ -9,10 +9,15 @@ const usePutNote = function() {
   return useSWRMutation(
     'notes.put',
     async (_, { arg: body }: { arg: NoteSchemaType }) => {
-      await fetch('/api/notes', {
+      const response = await fetch('/api/notes', {
         method: 'POST',
         body: JSON.stringify(body),
       });
+
+      if (!response.ok) {
+        const errorBody = await response.json().catch(() => null);
+        throw new Error(errorBody);
+      }
     }, {
       onSuccess: () => {
         mutate(

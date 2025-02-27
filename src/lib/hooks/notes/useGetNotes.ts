@@ -16,6 +16,12 @@ const useGetNotes = function (
       if (params.lyricId) search.set('lyricId', params.lyricId);
 
       const response = await fetch(`/api/notes?${search.toString()}`);
+
+      if (!response.ok) {
+        const errorBody = await response.json().catch(() => null);
+        throw new Error(errorBody);
+      }
+
       return await response.json() as Promise<Note[]>;
     })
 }

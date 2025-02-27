@@ -8,9 +8,14 @@ const useDeleteNote = function () {
   return useSWRMutation(
     'notes.delete',
     async (_, {arg: noteId}: { arg: string }) => {
-      await fetch(`/api/notes?id=${noteId}`, {
+      const response = await fetch(`/api/notes?id=${noteId}`, {
         method: 'DELETE',
       });
+
+      if (!response.ok) {
+        const errorBody = await response.json().catch(() => null);
+        throw new Error(errorBody);
+      }
     }, {
       onSuccess: () => {
         mutate(

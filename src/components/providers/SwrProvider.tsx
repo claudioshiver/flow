@@ -16,6 +16,10 @@ const SwrProvider = function ({children}: { children: ReactNode }) {
     onError: (error: any) => {
       const response = error.response.data as ErrorResponse;
 
+      console.log('>>> error:', error);
+      console.log('>>> error.response:', error.response);
+      console.log('>>> error.response.data:', error.response.data);
+
       const addError = (message: string) => addAlert({
         message,
         type: 'error',

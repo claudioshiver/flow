@@ -8,7 +8,7 @@ const useGetLyrics = function() {
       const response = await fetch('/api/lyrics');
 
       if (!response.ok) {
-        const errorBody = await response.json().catch(() => null);
+        const errorBody = await response.json();
         throw new Error(errorBody);
       }
 

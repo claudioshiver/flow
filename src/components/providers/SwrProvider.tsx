@@ -14,6 +14,11 @@ const SwrProvider = function ({children}: { children: ReactNode }) {
 
   const options = useMemo(() => ({
     onError: (error: any) => {
+      console.log('>>> error', error);
+      console.log('>>> error.error', error.error);
+      console.log('>>> error.errors', error.errors);
+      console.log('>>> error.message', error.message);
+
       const response = error.error as ErrorResponse;
 
       const addError = (message: string) => addAlert({

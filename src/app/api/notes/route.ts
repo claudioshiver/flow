@@ -2,7 +2,7 @@ import {NextRequest, NextResponse} from "next/server";
 import {getServerSession} from "next-auth";
 import authOptions from "@/lib/auth";
 import {NextSession} from "@/lib/types/Session";
-import {putNote, getNotesByLyric, getNotesByTag, deleteNote} from "@/app/api/notes/db";
+import {deleteNote, getNotesByLyric, getNotesByTag, putNote} from "@/app/api/notes/db";
 import {getCurrentLocale, getScopedI18n} from "@/locales/lib/server";
 import Locale from "@/lib/enums/Locale";
 import {NoteInput} from "@/lib/types/Note";
@@ -51,7 +51,7 @@ export async function POST(request: NextRequest) {
     await putNote(session.user.id, body)
 
     return new NextResponse('', {status: 200});
-  } catch(err: any) {
+  } catch (err: any) {
     return new NextResponse({...err}, {status: 400});
   }
 }

@@ -44,7 +44,7 @@ export async function POST(request: NextRequest) {
     await updateTags(session.user.id, body)
 
     return new NextResponse('', {status: 200});
-  } catch(err: any) {
+  } catch (err: any) {
     return new NextResponse({...err}, {status: 400});
   }
 }

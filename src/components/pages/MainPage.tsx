@@ -7,24 +7,25 @@ import TagSection from "@/components/sections/tag/TagSection";
 import LyricSection from "@/components/sections/lyric/LyricSection";
 import {useAppContext} from "@/components/providers/AppProvider";
 import TreeProvider from "@/components/providers/TreeProvider";
+import NotesProvider from "@/components/providers/NotesProvider";
 
 const MainPage = () => {
   const {tag, lyricId} = useAppContext();
 
   const treeClass = useMemo(() => (
-    cn('h-screen col-span-6 lg:col-span-1 lg:block lg:border-r', {
+    cn('h-screen col-span-6 lg:col-span-2 xl:col-span-1 lg:block lg:border-r', {
       'hidden': tag || lyricId
     })
   ), [tag, lyricId]);
 
   const tagClass = useMemo(() => (
-    cn('h-screen col-span-6 lg:col-span-2 lg:block lg:border-r', {
+    cn('h-screen col-span-6 lg:col-span-2 xl:col-span-2 lg:block lg:border-r', {
       'hidden': !tag
     })
   ), [tag]);
 
   const lyricClass = useMemo(() => (
-    cn('h-screen col-span-6 lg:col-span-3 lg:block', {
+    cn('h-screen col-span-6 lg:col-span-2 xl:col-span-3 lg:block', {
       'hidden': !lyricId
     })
   ), [lyricId]);
@@ -36,12 +37,14 @@ const MainPage = () => {
           <TreeSection/>
         </TreeProvider>
       </div>
-      <div className={tagClass}>
-        <TagSection/>
-      </div>
-      <div className={lyricClass}>
-        <LyricSection/>
-      </div>
+      <NotesProvider>
+        <div className={tagClass}>
+          <TagSection/>
+        </div>
+        <div className={lyricClass}>
+          <LyricSection/>
+        </div>
+      </NotesProvider>
     </div>
   );
 }

@@ -13,9 +13,10 @@ type NotesAreaProps = {
   content: string;
   setContent: (content: string) => void;
   onSend: () => void;
+  category: 'lyric' | 'tag';
 }
 
-const NotesArea = ({notes, content, setContent, onSend}: NotesAreaProps) => {
+const NotesArea = ({notes, category, content, setContent, onSend}: NotesAreaProps) => {
   const endRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -26,7 +27,10 @@ const NotesArea = ({notes, content, setContent, onSend}: NotesAreaProps) => {
     <div className="h-full flex flex-col">
       <div className="flex-1 overflow-y-auto p-2 space-y-2">
         {notes?.map((note, index) => (
-          <NoteItem key={index} note={note}/>
+          <NoteItem
+            key={index}
+            note={note}
+            category={category}/>
         ))}
         <div ref={endRef}/>
       </div>

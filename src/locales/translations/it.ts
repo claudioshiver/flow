@@ -28,6 +28,8 @@ const it = {
         move: {
           title: 'Sposta elemento',
           folder: 'Cartella',
+          lyric: 'Testo',
+          empty: 'Nessun testo',
           submit: 'Sposta'
         },
         remove: {
@@ -43,13 +45,28 @@ const it = {
           placeholder: 'Seleziona tags',
           searchPlaceholder: 'Cerca tags',
           emptyMessage: 'Nessun tag trovato'
-        }
+        },
+        edit: {
+          title: 'Modifica nota',
+          content: 'Contenuto',
+          tags: 'Tags',
+          submit: 'Salva',
+          placeholder: 'Seleziona tags',
+          searchPlaceholder: 'Cerca tags',
+          emptyMessage: 'Nessun tag trovato'
+        },
+        delete: {
+          title: 'Rimuovi nota',
+          description: 'Sei sicuro di voler rimuovere questa nota?',
+          submit: 'Rimuovi'
+        },
       },
       dropdown: {
         add: 'Aggiungi',
         remove: 'Rimuovi',
         rename: 'Rinomina',
-        move: 'Sposta'
+        move: 'Sposta',
+        edit: 'Modifica'
       }
     }
   },

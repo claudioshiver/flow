@@ -28,6 +28,8 @@ const en = {
         move: {
           title: 'Move item',
           folder: 'Folder',
+          lyric: 'Lyric',
+          empty: 'No lyric',
           submit: 'Move'
         },
         remove: {
@@ -43,13 +45,28 @@ const en = {
           placeholder: 'Select tags',
           searchPlaceholder: 'Search tags',
           emptyMessage: 'No tags found'
-        }
+        },
+        edit: {
+          title: 'Edit note',
+          content: 'Content',
+          tags: 'Tags',
+          submit: 'Save',
+          placeholder: 'Select tags',
+          searchPlaceholder: 'Search tags',
+          emptyMessage: 'No tags found'
+        },
+        delete: {
+          title: 'Remove note',
+          description: 'Are you sure you want to remove this note?',
+          submit: 'Remove'
+        },
       },
       dropdown: {
         add: 'Add',
         remove: 'Remove',
         rename: 'Rename',
-        move: 'Move'
+        move: 'Move',
+        edit: 'Edit'
       }
     }
   },

@@ -12,10 +12,7 @@ const AlertMessages = () => {
       <div className="mt-header md:mt-header-md mx-auto xl:max-w-screen-2xl">
         <div className="px-2 pt-2 space-y-2 lg:w-1/4 ml-auto">
           {alerts.map((alert) => (
-            <div
-              key={alert.uuid}
-              className="pointer-events-auto"
-              onClick={e => e.stopPropagation()}>
+            <div key={alert.uuid} className="pointer-events-auto">
               <Alert
                 label={alert.message}
                 startIcon={alert.icon}

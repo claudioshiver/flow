@@ -9,9 +9,6 @@ export default {
   ],
   theme: {
   	extend: {
-			fontSize: {
-				xxs: ['0.65rem', '0.7rem'],
-			},
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
@@ -75,7 +72,7 @@ export default {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
   			sm: 'calc(var(--radius) - 4px)'
-  		}
+  		},
   	}
   },
   plugins: [require("tailwindcss-animate")],

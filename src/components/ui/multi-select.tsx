@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import {useCallback} from "react"
+import {useCallback, useEffect} from "react"
 import {Check, X} from "lucide-react"
 import {flip, offset, shift, useFloating} from "@floating-ui/react";
 
@@ -62,19 +62,24 @@ export function MultiSelect({onChange, ...props}: MultiSelectProps) {
     })
   ), [])
 
-  // useEffect(() => {
-  //   const close = (event: MouseEvent) => {
-  //     if (refs.floating.current && !refs.floating.current.contains(event.target as Node)) {
-  //       setOpen(false)
-  //     }
-  //   }
+  useEffect(() => {
+    const close = (event: MouseEvent) => {
+      if (
+        refs.floating.current &&
+        refs.domReference.current &&
+        !refs.floating.current.contains(event.target as Node) &&
+        !refs.domReference.current.contains(event.target as Node)
+      ) {
+        setOpen(false)
+      }
+    }
 
-  //   open
-  //     ? document.addEventListener("click", close)
-  //     : document.removeEventListener("click", close);
+    open
+      ? document.addEventListener("click", close)
+      : document.removeEventListener("click", close);
 
-  //   return () => document.body.removeEventListener("click", close)
-  // }, [open, refs.floating])
+    return () => document.body.removeEventListener("click", close)
+  }, [open, refs])
 
   return (
     <>

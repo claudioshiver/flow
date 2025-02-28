@@ -63,13 +63,21 @@ export function MultiSelect({onChange, ...props}: MultiSelectProps) {
   ), [])
 
   useEffect(() => {
-    const close = () => setOpen(false)
-    document.body.addEventListener("click", close)
+    const close = (event: MouseEvent) => {
+      if (refs.floating.current && !refs.floating.current.contains(event.target as Node)) {
+        setOpen(false)
+      }
+    }
+
+    open
+      ? document.addEventListener("click", close)
+      : document.removeEventListener("click", close);
+
     return () => document.body.removeEventListener("click", close)
-  }, [])
+  }, [open, refs.floating])
 
   return (
-    <div className="contents" onClick={e => e.stopPropagation()}>
+    <>
       <div
         ref={refs.setReference}
         onClick={() => setOpen(!open)}
@@ -126,7 +134,7 @@ export function MultiSelect({onChange, ...props}: MultiSelectProps) {
           </Command>
         </div>
       )}
-    </div>
+    </>
   )
 }
 

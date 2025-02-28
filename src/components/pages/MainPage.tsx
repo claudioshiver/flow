@@ -17,19 +17,19 @@ const MainPage = () => {
   const {tag, lyricId} = useAppContext();
 
   const treeClass = useMemo(() => (
-    cn('h-full max-h-screen col-span-6 lg:col-span-2 xl:col-span-1 lg:block lg:border-r', {
+    cn('h-[100dvh] col-span-6 lg:col-span-2 xl:col-span-1 lg:block lg:border-r', {
       'hidden': tag || lyricId
     })
   ), [tag, lyricId]);
 
   const tagClass = useMemo(() => (
-    cn('h-full max-h-screen col-span-6 lg:col-span-2 xl:col-span-2 lg:block lg:border-r', {
+    cn('h-[100dvh] col-span-6 lg:col-span-2 xl:col-span-2 lg:block lg:border-r', {
       'hidden': !tag
     })
   ), [tag]);
 
   const lyricClass = useMemo(() => (
-    cn('h-full max-h-screen col-span-6 lg:col-span-2 xl:col-span-3 lg:block', {
+    cn('h-[100dvh] col-span-6 lg:col-span-2 xl:col-span-3 lg:block', {
       'hidden': !lyricId
     })
   ), [lyricId]);

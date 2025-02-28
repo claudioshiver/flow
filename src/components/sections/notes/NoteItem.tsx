@@ -7,10 +7,12 @@ import NoteDropdown from "@/components/sections/notes/NoteDropdown";
 
 type NoteItemProps = {
   note: Note;
+  index: number;
+  last: boolean;
   category: 'lyric' | 'tag';
 }
 
-const NoteItem = ({note, category}: NoteItemProps) => {
+const NoteItem = ({note, category, index, last}: NoteItemProps) => {
   return (
     <div className="bg-muted py-2 px-4 rounded flex gap-1">
       <div className="flex-1 flex flex-col gap-3">
@@ -27,9 +29,18 @@ const NoteItem = ({note, category}: NoteItemProps) => {
           </div>
         )}
       </div>
-      <NoteDropdown
-        category={category}
-        item={note} />
+      <div className="flex flex-col gap-3">
+        <NoteDropdown
+          index={index}
+          last={last}
+          category={category}
+          item={note}/>
+        {note.lyricId && (
+          <div>
+            ({note.lyricOrder})
+          </div>
+        )}
+      </div>
     </div>
   );
 }

@@ -75,6 +75,8 @@ const it = {
         rename: 'Rinomina',
         edit: 'Modifica',
         move: 'Sposta',
+        moveUp: 'Sposta su',
+        moveDown: 'Sposta giù',
         use: 'Usa',
         discard: 'Scarta',
       }

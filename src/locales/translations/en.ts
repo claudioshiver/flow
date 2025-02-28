@@ -75,6 +75,8 @@ const en = {
         rename: 'Rename',
         edit: 'Edit',
         move: 'Move',
+        moveUp: 'Move up',
+        moveDown: 'Move down',
         use: 'Use',
         discard: 'Discard',
       }

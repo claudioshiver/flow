@@ -10,6 +10,7 @@ import {searchItem} from "@/lib/utils/tree";
 import {Button} from "@/components/ui/button";
 import usePutNote from "@/lib/hooks/notes/usePutNote";
 import NotesArea from "@/components/sections/notes/NotesArea";
+import {getLyricOrder} from "@/lib/utils/notes";
 
 const LyricSection = () => {
   const {lyricId, setLyricId} = useAppContext();
@@ -20,19 +21,23 @@ const LyricSection = () => {
 
   const [content, setContent] = useState("")
 
+  const lyricOrder = useMemo(() => (
+    getLyricOrder(notes || [])
+  ), [notes])
+
   const handleSendMessage = useCallback(async () => {
     if (content) {
       await putNote({
         noteId: uuid(),
         content: content,
         lyricId,
-        lyricOrder: notes?.length || 0,
+        lyricOrder,
         tags: [],
       });
 
       setContent("")
     }
-  }, [content, lyricId, notes, putNote]);
+  }, [content, lyricId, lyricOrder, putNote]);
 
   const lyric = useMemo(() => (
     lyricId ? searchItem(lyrics || [], lyricId) : undefined

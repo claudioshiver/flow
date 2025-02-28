@@ -1,6 +1,15 @@
 'use client';
 
-import {ArrowLeftToLine, ArrowRightToLine, ArrowUpRight, MoreHorizontal, Pencil, Trash2} from "lucide-react";
+import {
+  ArrowLeftToLine,
+  ArrowRightToLine,
+  ArrowUpRight,
+  ChevronDown,
+  ChevronUp,
+  MoreHorizontal,
+  Pencil,
+  Trash2
+} from "lucide-react";
 import {Button} from "@/components/ui/button";
 import {useScopedI18n} from "@/locales/lib/client";
 import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger} from "@/components/ui/dropdown-menu";
@@ -13,11 +22,13 @@ import {useMemo} from "react";
 import {getLyricOrder} from "@/lib/utils/notes";
 
 type NoteDropdownProps = {
-  item: Note
-  category: 'lyric' | 'tag'
+  item: Note;
+  index: number;
+  last: boolean;
+  category: 'lyric' | 'tag';
 }
 
-const NoteDropdown = ({item, category}: NoteDropdownProps) => {
+const NoteDropdown = ({item, category, index, last}: NoteDropdownProps) => {
   const t = useScopedI18n('pages.main');
 
   const {lyricId} = useAppContext();
@@ -55,7 +66,7 @@ const NoteDropdown = ({item, category}: NoteDropdownProps) => {
               lyricOrder: undefined
             })
           }}>
-            <ArrowLeftToLine />
+            <ArrowLeftToLine/>
             {t('dropdown.discard')}
           </DropdownMenuItem>
         )}
@@ -68,29 +79,54 @@ const NoteDropdown = ({item, category}: NoteDropdownProps) => {
               lyricOrder,
             })
           }}>
-            <ArrowRightToLine />
+            <ArrowRightToLine/>
             {t('dropdown.use')} ({lyricOrder})
+          </DropdownMenuItem>
+        )}
+        {(item.lyricId && index !== 0) && (
+          <DropdownMenuItem onClick={async e => {
+            e.stopPropagation()
+            await Promise.all([
+              putNode({...item, lyricOrder: notes![index - 1].lyricOrder}),
+              putNode({...notes![index - 1], lyricOrder: item.lyricOrder}),
+            ])
+          }}>
+            <ChevronUp/>
+            {t('dropdown.moveUp')} ({notes![index - 1].lyricOrder})
+          </DropdownMenuItem>
+
+        )}
+        {(item.lyricId && !last) && (
+          <DropdownMenuItem onClick={async e => {
+            e.stopPropagation()
+            await Promise.all([
+              putNode({...item, lyricOrder: notes![index + 1].lyricOrder}),
+              putNode({...notes![index + 1], lyricOrder: item.lyricOrder}),
+            ])
+          }}>
+            <ChevronDown/>
+            {t('dropdown.moveDown')} ({notes![index + 1].lyricOrder})
           </DropdownMenuItem>
         )}
         <DropdownMenuItem onClick={e => {
           e.stopPropagation()
           setMovingItem({category, item: {...item}})
         }}>
-          <ArrowUpRight />
+          <ArrowUpRight/>
           {t('dropdown.move')}
         </DropdownMenuItem>
         <DropdownMenuItem onClick={e => {
           e.stopPropagation()
           setEditingItem({category, item: {...item}})
         }}>
-          <Pencil />
+          <Pencil/>
           {t('dropdown.edit')}
         </DropdownMenuItem>
         <DropdownMenuItem onClick={e => {
           e.stopPropagation()
           setRemovingItem({category, item: {...item}})
         }}>
-          <Trash2 />
+          <Trash2/>
           {t('dropdown.remove')}
         </DropdownMenuItem>
       </DropdownMenuContent>

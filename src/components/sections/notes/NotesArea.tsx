@@ -29,6 +29,8 @@ const NotesArea = ({notes, category, content, setContent, onSend}: NotesAreaProp
         {notes?.map((note, index) => (
           <NoteItem
             key={index}
+            index={index}
+            last={index === notes.length - 1}
             note={note}
             category={category}/>
         ))}

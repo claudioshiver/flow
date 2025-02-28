@@ -67,7 +67,7 @@ const TreeProvider = function ({children}: { children: ReactNode }) {
     setMovingItem,
     addingItem,
     setAddingItem,
-  }), [openItems, isAddingNote, removingItem, renamingItem, movingItem, addingItem]);
+  }), [openItems, setOpenItems, isAddingNote, removingItem, renamingItem, movingItem, addingItem]);
 
   return (
     <TreeContext.Provider value={context}>

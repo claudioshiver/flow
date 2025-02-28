@@ -67,7 +67,6 @@ const NoteEditDialog = () => {
           <div className="grid gap-2">
             <Label htmlFor="content">{t('content')}</Label>
             <Textarea
-              autoFocus
               id="content"
               name="content"
               autoComplete="off"

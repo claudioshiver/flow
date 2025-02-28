@@ -95,7 +95,6 @@ const NodeAddDialog = () => {
           <div className="grid gap-2">
             <Label htmlFor="label">{t('label')}</Label>
             <Input
-              autoFocus
               id="label"
               name="label"
               autoComplete="off"

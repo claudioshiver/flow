@@ -3,14 +3,14 @@
 import {useMemo} from "react";
 import cn from "classnames";
 import TreeSection from "@/components/sections/tree/TreeSection";
-import TagSection from "@/components/sections/tag/TagSection";
-import LyricSection from "@/components/sections/lyric/LyricSection";
+import TagSection from "@/components/sections/notes/TagSection";
+import LyricSection from "@/components/sections/notes/LyricSection";
 import {useAppContext} from "@/components/providers/AppProvider";
 import TreeProvider from "@/components/providers/TreeProvider";
 import NotesProvider from "@/components/providers/NotesProvider";
-import NoteEditDialog from "@/components/commons/NoteEditDialog";
-import NoteRemoveDialog from "@/components/commons/NoteRemoveDialog";
-import NoteMoveDialog from "@/components/commons/NoteMoveDialog";
+import NoteEditDialog from "@/components/sections/notes/NoteEditDialog";
+import NoteRemoveDialog from "@/components/sections/notes/NoteRemoveDialog";
+import NoteMoveDialog from "@/components/sections/notes/NoteMoveDialog";
 import * as React from "react";
 
 const MainPage = () => {

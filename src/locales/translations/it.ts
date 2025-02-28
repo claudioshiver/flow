@@ -10,63 +10,73 @@ const it = {
     main: {
       tree: {
         lyrics: 'Testi',
-        tags: 'Tags'
+        tags: 'Tags',
+        dialogs: {
+          add: {
+            title: 'Aggiungi nuovo elemento',
+            leaf: 'Elemento',
+            folder: 'Cartella',
+            label: 'Nome',
+            submit: 'Aggiungi'
+          },
+          remove: {
+            title: 'Rimuovi elemento',
+            description: 'Sei sicuro di voler rimuovere questo elemento e tutto il suo contenuto?',
+            submit: 'Rimuovi'
+          },
+          move: {
+            title: 'Sposta elemento',
+            folder: 'Cartella',
+            submit: 'Sposta'
+          },
+          rename: {
+            title: 'Rinomina elemento',
+            label: 'Nome',
+            submit: 'Rinomina'
+          },
+        },
       },
-      dialogs: {
-        add: {
-          title: 'Aggiungi nuovo elemento',
-          leaf: 'Elemento',
-          folder: 'Cartella',
-          label: 'Nome',
-          submit: 'Aggiungi'
-        },
-        rename: {
-          title: 'Rinomina elemento',
-          label: 'Nome',
-          submit: 'Rinomina'
-        },
-        move: {
-          title: 'Sposta elemento',
-          folder: 'Cartella',
-          lyric: 'Testo',
-          empty: 'Nessun testo',
-          submit: 'Sposta'
-        },
-        remove: {
-          title: 'Rimuovi elemento',
-          description: 'Sei sicuro di voler rimuovere questo elemento e tutto il suo contenuto?',
-          submit: 'Rimuovi'
-        },
-        note: {
-          title: 'Aggiungi nota',
-          content: 'Contenuto',
-          tags: 'Tags',
-          submit: 'Aggiungi',
-          placeholder: 'Seleziona tags',
-          searchPlaceholder: 'Cerca tags',
-          emptyMessage: 'Nessun tag trovato'
-        },
-        edit: {
-          title: 'Modifica nota',
-          content: 'Contenuto',
-          tags: 'Tags',
-          submit: 'Salva',
-          placeholder: 'Seleziona tags',
-          searchPlaceholder: 'Cerca tags',
-          emptyMessage: 'Nessun tag trovato'
-        },
-        delete: {
-          title: 'Rimuovi nota',
-          description: 'Sei sicuro di voler rimuovere questa nota?',
-          submit: 'Rimuovi'
+      notes: {
+        dialogs: {
+          add: {
+            title: 'Aggiungi nota',
+            content: 'Contenuto',
+            tags: 'Tags',
+            submit: 'Aggiungi',
+            placeholder: 'Seleziona tags',
+            searchPlaceholder: 'Cerca tags',
+            emptyMessage: 'Nessun tag trovato'
+          },
+          remove: {
+            title: 'Rimuovi nota',
+            description: 'Sei sicuro di voler rimuovere questa nota?',
+            submit: 'Rimuovi'
+          },
+          move: {
+            title: 'Sposta elemento',
+            lyric: 'Testo',
+            empty: 'Nessun testo',
+            submit: 'Sposta'
+          },
+          edit: {
+            title: 'Modifica nota',
+            content: 'Contenuto',
+            tags: 'Tags',
+            submit: 'Salva',
+            placeholder: 'Seleziona tags',
+            searchPlaceholder: 'Cerca tags',
+            emptyMessage: 'Nessun tag trovato'
+          },
         },
       },
       dropdown: {
         add: 'Aggiungi',
         remove: 'Rimuovi',
         rename: 'Rinomina',
+        edit: 'Modifica',
         move: 'Sposta',
-        edit: 'Modifica'
+        use: 'Usa',
+        discard: 'Scarta',
       }
     }
   },

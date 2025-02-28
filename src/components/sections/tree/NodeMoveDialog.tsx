@@ -13,7 +13,7 @@ import {SingleSelect} from "@/components/ui/single-select";
 import usePutTags from "@/lib/hooks/tags/usePutTags";
 import usePutLyrics from "@/lib/hooks/lyrics/usePutLyrics";
 
-const MoveDialog = () => {
+const NodeMoveDialog = () => {
   const {data: tags} = useGetTags();
   const {data: lyrics} = useGetLyrics();
 
@@ -22,7 +22,7 @@ const MoveDialog = () => {
 
   const {movingItem, setMovingItem} = useTreeContext();
 
-  const t = useScopedI18n('pages.main.dialogs.move');
+  const t = useScopedI18n('pages.main.tree.dialogs.move');
   const tc = useScopedI18n('pages.main.tree');
 
   const onOpenChange = useCallback((open: boolean) => {
@@ -79,4 +79,4 @@ const MoveDialog = () => {
   )
 }
 
-export default MoveDialog;
+export default NodeMoveDialog;

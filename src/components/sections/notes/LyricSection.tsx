@@ -1,17 +1,20 @@
 import {ChevronLeft} from "lucide-react";
 import * as React from "react";
-import {useCallback, useState} from "react";
+import {useCallback, useMemo, useState} from "react";
 import {v4 as uuid} from "uuid";
-import Section from "@/components/commons/Section";
-import useGetNotes from "@/lib/hooks/notes/useGetNotes";
 import {useAppContext} from "@/components/providers/AppProvider";
+import useGetNotes from "@/lib/hooks/notes/useGetNotes";
+import Section from "@/components/commons/Section";
+import useGetLyrics from "@/lib/hooks/lyrics/useGetLyrics";
+import {searchItem} from "@/lib/utils/tree";
 import {Button} from "@/components/ui/button";
 import usePutNote from "@/lib/hooks/notes/usePutNote";
-import NotesArea from "@/components/commons/NotesArea";
+import NotesArea from "@/components/sections/notes/NotesArea";
 
-const TagSection = () => {
-  const {tag, setTag} = useAppContext();
-  const {data: notes} = useGetNotes({tag})
+const LyricSection = () => {
+  const {lyricId, setLyricId} = useAppContext();
+  const {data: lyrics} = useGetLyrics();
+  const {data: notes} = useGetNotes({lyricId});
 
   const {trigger: putNote} = usePutNote();
 
@@ -22,28 +25,34 @@ const TagSection = () => {
       await putNote({
         noteId: uuid(),
         content: content,
-        tags: [tag],
+        lyricId,
+        lyricOrder: notes?.length || 0,
+        tags: [],
       });
 
       setContent("")
     }
-  }, [content, putNote, tag]);
+  }, [content, lyricId, notes, putNote]);
+
+  const lyric = useMemo(() => (
+    lyricId ? searchItem(lyrics || [], lyricId) : undefined
+  ), [lyrics, lyricId]);
 
   return (
     <Section
-      title={tag || ''}
+      title={lyric?.label || ''}
       before={
         <Button
           size="icon"
           variant="ghost"
           className="lg:hidden"
-          onClick={() => setTag()}>
+          onClick={() => setLyricId()}>
           <ChevronLeft className="h-4 w-4"/>
         </Button>
       }>
-      {tag && (
+      {lyricId && (
         <NotesArea
-          category="tag"
+          category="lyric"
           notes={notes}
           content={content}
           setContent={setContent}
@@ -53,4 +62,4 @@ const TagSection = () => {
   );
 }
 
-export default TagSection;
+export default LyricSection;

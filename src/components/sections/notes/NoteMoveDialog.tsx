@@ -11,6 +11,7 @@ import {SingleSelect} from "@/components/ui/single-select";
 import {useNotesContext} from "@/components/providers/NotesProvider";
 import usePutNote from "@/lib/hooks/notes/usePutNote";
 import useGetNotes from "@/lib/hooks/notes/useGetNotes";
+import {getLyricOrder} from "@/lib/utils/notes";
 
 const NoteMoveDialog = () => {
   const {data: lyrics} = useGetLyrics();
@@ -19,9 +20,13 @@ const NoteMoveDialog = () => {
 
   const {movingItem, setMovingItem} = useNotesContext();
 
-  const {mutate: getNotes} = useGetNotes({lyricId: movingItem?.item?.lyricId});
+  const {data: notes} = useGetNotes({lyricId: movingItem?.item?.lyricId});
 
-  const t = useScopedI18n('pages.main.dialogs.move');
+  const t = useScopedI18n('pages.main.notes.dialogs.move');
+
+  const lyricOrder = useMemo(() => (
+    getLyricOrder(notes || [])
+  ), [notes])
 
   const onOpenChange = useCallback((open: boolean) => {
     !open && setMovingItem(null)
@@ -34,15 +39,16 @@ const NoteMoveDialog = () => {
 
   const handleSubmit = useCallback(async (e: FormEvent) => {
     e.preventDefault()
-    const notes = await getNotes();
 
     await putNode({
       ...movingItem?.item!,
-      lyricOrder: notes?.length || 0,
+      lyricOrder: movingItem?.item?.lyricId
+        ? lyricOrder
+        : undefined
     });
 
     setMovingItem(null)
-  }, [movingItem, putNode, getNotes, setMovingItem]);
+  }, [putNode, movingItem, lyricOrder, setMovingItem]);
 
   const handleLyric = useCallback((value: string) => {
     setMovingItem({
@@ -68,7 +74,9 @@ const NoteMoveDialog = () => {
               onChange={handleLyric}
               options={lyricsOptions}/>
           </div>
-          <Button type="submit">{t('submit')}</Button>
+          <Button type="submit">
+            {t('submit')} ({lyricOrder})
+          </Button>
         </form>
       </DialogContent>
     </Dialog>

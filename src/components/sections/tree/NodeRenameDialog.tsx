@@ -13,7 +13,7 @@ import usePutLyrics from "@/lib/hooks/lyrics/usePutLyrics";
 import {renameItem} from "@/lib/utils/tree";
 import {useTreeContext} from "@/components/providers/TreeProvider";
 
-const RenameDialog = () => {
+const NodeRenameDialog = () => {
   const {data: tags} = useGetTags();
   const {data: lyrics} = useGetLyrics();
 
@@ -22,7 +22,7 @@ const RenameDialog = () => {
 
   const {renamingItem, setRenamingItem} = useTreeContext();
 
-  const t = useScopedI18n('pages.main.dialogs.rename');
+  const t = useScopedI18n('pages.main.tree.dialogs.rename');
 
   const onOpenChange = useCallback((open: boolean) => {
     !open && setRenamingItem(null)
@@ -82,4 +82,4 @@ const RenameDialog = () => {
   )
 }
 
-export default RenameDialog;
+export default NodeRenameDialog;

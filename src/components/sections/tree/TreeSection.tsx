@@ -10,16 +10,16 @@ import useGetLyrics from "@/lib/hooks/lyrics/useGetLyrics";
 import {useCallback} from "react";
 import {Tree, TreeNode} from "@/components/ui/tree";
 import {useScopedI18n} from "@/locales/lib/client";
-import AddDialog from "@/components/sections/tree/AddDialog";
+import NodeAddDialog from "@/components/sections/tree/NodeAddDialog";
 import {TreeNodeItem} from "@/lib/types/Tree";
 import {useAppContext} from "@/components/providers/AppProvider";
 import AddButton from "@/components/sections/tree/AddButton";
-import RemoveDialog from "@/components/sections/tree/RemoveDialog";
+import NodeRemoveDialog from "@/components/sections/tree/NodeRemoveDialog";
 import TreeDropdown from "@/components/sections/tree/TreeDropdown";
-import NoteDialog from "@/components/sections/tree/NoteDialog";
+import NoteAddDialog from "@/components/sections/tree/NoteAddDialog";
 import {useTreeContext} from "@/components/providers/TreeProvider";
-import RenameDialog from "@/components/sections/tree/RenameDialog";
-import MoveDialog from "@/components/sections/tree/MoveDialog";
+import NodeRenameDialog from "@/components/sections/tree/NodeRenameDialog";
+import NodeMoveDialog from "@/components/sections/tree/NodeMoveDialog";
 
 const TreeSection = () => {
   const {data: tags, isLoading: isLoadingTags} = useGetTags();
@@ -94,16 +94,17 @@ const TreeSection = () => {
           <Button
             className="w-full"
             onClick={() => setIsAddingNote(true)}>
-            {t('dialogs.note.title')}
+            {t('notes.dialogs.add.title')}
           </Button>
         </div>
       </div>
 
-      <AddDialog />
-      <MoveDialog />
-      <RenameDialog />
-      <RemoveDialog />
-      <NoteDialog />
+      <NodeAddDialog />
+      <NodeMoveDialog />
+      <NodeRenameDialog />
+      <NodeRemoveDialog />
+
+      <NoteAddDialog />
     </Section>
   );
 }

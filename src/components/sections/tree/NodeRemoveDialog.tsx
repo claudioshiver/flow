@@ -11,7 +11,7 @@ import usePutLyrics from "@/lib/hooks/lyrics/usePutLyrics";
 import {removeItemAndChildren} from "@/lib/utils/tree";
 import {useTreeContext} from "@/components/providers/TreeProvider";
 
-const RemoveDialog = () => {
+const NodeRemoveDialog = () => {
   const {data: tags} = useGetTags();
   const {data: lyrics} = useGetLyrics();
 
@@ -20,7 +20,7 @@ const RemoveDialog = () => {
 
   const {removingItem, setRemovingItem} = useTreeContext();
 
-  const t = useScopedI18n('pages.main.dialogs.remove');
+  const t = useScopedI18n('pages.main.tree.dialogs.remove');
 
   const onOpenChange = useCallback((open: boolean) => {
     !open && setRemovingItem(null)
@@ -57,4 +57,4 @@ const RemoveDialog = () => {
   )
 }
 
-export default RemoveDialog;
+export default NodeRemoveDialog;

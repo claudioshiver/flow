@@ -12,7 +12,7 @@ const NoteRemoveDialog = () => {
 
   const {removingItem, setRemovingItem} = useNotesContext();
 
-  const t = useScopedI18n('pages.main.dialogs.delete');
+  const t = useScopedI18n('pages.main.notes.dialogs.remove');
 
   const onOpenChange = useCallback((open: boolean) => {
     !open && setRemovingItem(null)

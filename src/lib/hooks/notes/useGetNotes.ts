@@ -5,10 +5,10 @@ const useGetNotes = function (
   params: { tag?: string, lyricId?: string }
 ) {
   return useSWR(
-    params.tag
-      ? ['notes.get', params.tag]
-      : params.lyricId
-        ? ['notes.get', params.lyricId]
+    params.lyricId
+      ? ['notes.get', params.lyricId]
+      : params.tag
+        ? ['notes.get', params.tag]
         : null,
     async () => {
       const search = new URLSearchParams();

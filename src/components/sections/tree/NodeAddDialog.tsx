@@ -15,7 +15,7 @@ import usePutLyrics from "@/lib/hooks/lyrics/usePutLyrics";
 import {addChildToParent} from "@/lib/utils/tree";
 import {useTreeContext} from "@/components/providers/TreeProvider";
 
-const AddDialog = () => {
+const NodeAddDialog = () => {
   const {data: tags} = useGetTags();
   const {data: lyrics} = useGetLyrics();
 
@@ -24,7 +24,7 @@ const AddDialog = () => {
 
   const {addingItem, setAddingItem} = useTreeContext();
 
-  const t = useScopedI18n('pages.main.dialogs.add');
+  const t = useScopedI18n('pages.main.tree.dialogs.add');
 
   const [formData, setFormData] = useState({
     label: "",
@@ -109,4 +109,4 @@ const AddDialog = () => {
   )
 }
 
-export default AddDialog;
+export default NodeAddDialog;

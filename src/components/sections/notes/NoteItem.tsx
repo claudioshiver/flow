@@ -3,7 +3,7 @@
 import * as React from "react";
 import {Badge} from "@/components/ui/badge";
 import {Note} from "@/lib/types/Note";
-import NoteDropdown from "@/components/commons/NoteDropdown";
+import NoteDropdown from "@/components/sections/notes/NoteDropdown";
 
 type NoteItemProps = {
   note: Note;

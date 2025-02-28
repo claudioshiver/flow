@@ -5,7 +5,7 @@ import * as React from "react";
 import {useEffect, useRef} from "react";
 import {Textarea} from "@/components/ui/textarea";
 import {Button} from "@/components/ui/button";
-import NoteItem from "@/components/commons/NoteItem";
+import NoteItem from "@/components/sections/notes/NoteItem";
 import {Note} from "@/lib/types/Note";
 
 type NotesAreaProps = {

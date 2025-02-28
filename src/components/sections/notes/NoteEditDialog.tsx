@@ -1,7 +1,6 @@
 'use client';
 
-import {ChangeEvent, FormEvent, useCallback, useMemo, useState} from "react";
-import {v4 as uuid} from 'uuid';
+import {ChangeEvent, FormEvent, useCallback, useMemo} from "react";
 import {Dialog, DialogContent, DialogHeader, DialogTitle} from "@/components/ui/dialog";
 import {Label} from "@/components/ui/label";
 import {Button} from "@/components/ui/button";
@@ -11,55 +10,55 @@ import usePutNote from "@/lib/hooks/notes/usePutNote";
 import {Textarea} from "@/components/ui/textarea";
 import {MultiSelect} from "@/components/ui/multi-select";
 import {flattenTree} from "@/lib/utils/tree";
-import {useTreeContext} from "@/components/providers/TreeProvider";
+import {useNotesContext} from "@/components/providers/NotesProvider";
 
-const NoteDialog = () => {
+const NoteEditDialog = () => {
   const {data: tags} = useGetTags();
   const {trigger: putNote} = usePutNote();
 
-  const {isAddingNote, setIsAddingNote} = useTreeContext();
+  const {editingItem, setEditingItem} = useNotesContext();
 
-  const t = useScopedI18n('pages.main.dialogs.note');
+  const t = useScopedI18n('pages.main.notes.dialogs.edit');
 
-  const [formData, setFormData] = useState({
-    content: "",
-    tags: [] as string[],
-  })
-
-  const tagsOptions = useMemo(()=> (
+  const tagsOptions = useMemo(() => (
     flattenTree(tags || [], 'leaf')
   ), [tags])
+
+  const onOpenChange = useCallback((open: boolean) => {
+    !open && setEditingItem(null)
+  }, [setEditingItem]);
 
   const handleSubmit = useCallback(async (e: FormEvent) => {
     e.preventDefault()
 
-    if (formData.content) {
-      await putNote({
-        noteId: uuid(),
-        ...formData,
-      });
-
-      setFormData({content: "", tags: []})
-      setIsAddingNote(false)
+    if (editingItem?.item?.content) {
+      await putNote(editingItem?.item);
+      setEditingItem(null)
     }
-  }, [formData, putNote, setIsAddingNote]);
+  }, [editingItem, putNote, setEditingItem]);
 
   const handleTags = useCallback((value: string[]) => {
-    setFormData((prev) => ({
-      ...prev,
-      tags: value
-    }))
-  }, []);
+    setEditingItem({
+      ...editingItem!,
+      item: {
+        ...editingItem?.item!,
+        tags: value
+      }
+    })
+  }, [editingItem, setEditingItem]);
 
   const handleContent = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => {
-    setFormData((prev) => ({
-      ...prev,
-      content: e.target.value
-    }))
-  }, []);
+    setEditingItem({
+      ...editingItem!,
+      item: {
+        ...editingItem?.item!,
+        content: e.target.value
+      }
+    })
+  }, [editingItem, setEditingItem]);
 
   return (
-    <Dialog open={isAddingNote} onOpenChange={setIsAddingNote}>
+    <Dialog open={!!editingItem} onOpenChange={onOpenChange}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>{t('title')}</DialogTitle>
@@ -73,7 +72,7 @@ const NoteDialog = () => {
               name="content"
               autoComplete="off"
               className="min-h-[60px]"
-              value={formData.content}
+              value={editingItem?.item?.content || ''}
               onChange={handleContent}/>
           </div>
           <div className="grid gap-2">
@@ -82,7 +81,7 @@ const NoteDialog = () => {
               placeholder={t('placeholder')}
               searchPlaceholder={t('searchPlaceholder')}
               emptyMessage={t('emptyMessage')}
-              selected={formData.tags}
+              selected={editingItem?.item?.tags || []}
               onChange={handleTags}
               options={tagsOptions}/>
           </div>
@@ -93,4 +92,4 @@ const NoteDialog = () => {
   )
 }
 
-export default NoteDialog;
+export default NoteEditDialog;

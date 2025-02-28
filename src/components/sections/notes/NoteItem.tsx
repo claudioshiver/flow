@@ -29,7 +29,7 @@ const NoteItem = ({note, category, index, last}: NoteItemProps) => {
           {note.tags.map((tag, index) => (
             <div
               key={index}
-              className="text-[0.65rem] leading-[0.7rem] font-semibold focus:outline-none">
+              className="text-[0.65rem] leading-[0.7rem] text-gray-400 font-semibold focus:outline-none">
               {tag}
             </div>
           ))}

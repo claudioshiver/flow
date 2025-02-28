@@ -1,13 +1,13 @@
 "use client"
 
 import * as React from "react"
+import {useCallback} from "react"
 import {Check, X} from "lucide-react"
+import {flip, offset, shift, useFloating} from "@floating-ui/react";
 
 import {Badge} from "@/components/ui/badge"
 import {Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList} from "@/components/ui/command"
-import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover"
 import {cn} from "@/lib/utils/ui"
-import {useCallback} from "react";
 
 export type Option = {
   value: string
@@ -25,6 +25,16 @@ type MultiSelectProps = {
 
 export function MultiSelect({onChange, ...props}: MultiSelectProps) {
   const [open, setOpen] = React.useState(false)
+
+  const {refs, floatingStyles} = useFloating({
+    open: open,
+    placement: "bottom-start",
+    middleware: [
+      offset(5),
+      flip(),
+      shift(),
+    ],
+  })
 
   const handleRemove = useCallback((value: string) => {
     onChange(props.selected.filter((v) => v !== value))
@@ -53,32 +63,40 @@ export function MultiSelect({onChange, ...props}: MultiSelectProps) {
   ), [])
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <div className="w-full relative flex min-h-10 cursor-pointer items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background">
-          <div className="flex flex-wrap gap-1">
-            {props.selected.length > 0 ? (
-              props.selected.map((value) => {
-                const selectedOption = props.options.find((option) => option.value === value)
-                return (
-                  <Badge key={value} variant="secondary">
-                    {selectedOption?.label}
-                    <button
-                      className="ml-1 rounded-full outline-none ring-offset-background focus:ring-2 focus:ring-ring focus:ring-offset-2"
-                      onMouseDown={handleMouseDown}
-                      onClick={() => handleRemove(value)}>
-                      <X className="h-3 w-3 text-muted-foreground hover:text-foreground"/>
-                    </button>
-                  </Badge>
-                )
-              })
-            ) : (
-              <span className="text-muted-foreground">{props.placeholder}</span>
-            )}
-          </div>
+    <>
+      <div
+        ref={refs.setReference}
+        onClick={() => setOpen(!open)}
+        className="w-full relative flex min-h-10 cursor-pointer items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background">
+        <div className="flex flex-wrap gap-1">
+          {props.selected.length > 0 ? (
+            props.selected.map((value) => {
+              const selectedOption = props.options.find((option) => option.value === value)
+              return (
+                <Badge key={value} variant="secondary">
+                  {selectedOption?.label}
+                  <button
+                    className="ml-1 rounded-full outline-none ring-offset-background focus:ring-2 focus:ring-ring focus:ring-offset-2"
+                    onMouseDown={handleMouseDown}
+                    onClick={() => handleRemove(value)}>
+                    <X className="h-3 w-3 text-muted-foreground hover:text-foreground"/>
+                  </button>
+                </Badge>
+              )
+            })
+          ) : (
+            <span className="text-muted-foreground">{props.placeholder}</span>
+          )}
         </div>
-      </PopoverTrigger>
-      <PopoverContent className="w-full p-0" align="start">
+      </div>
+      <div
+        ref={refs.setFloating}
+        className="rounded-lg border bg-popover shadow-md w-full p-0"
+        style={{
+          ...floatingStyles,
+          zIndex: 99999,
+          width: 300,
+        }}>
         <Command>
           <CommandInput placeholder={props.searchPlaceholder}/>
           <CommandList>
@@ -100,8 +118,8 @@ export function MultiSelect({onChange, ...props}: MultiSelectProps) {
             </CommandGroup>
           </CommandList>
         </Command>
-      </PopoverContent>
-    </Popover>
+      </div>
+    </>
   )
 }
 

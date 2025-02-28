@@ -9,8 +9,8 @@ type RootLayoutProps = Readonly<{
 
 export default async function RootLayout({children}: RootLayoutProps) {
   return (
-    <html>
-    <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+    <html className="h-full">
+    <body className={`${geistSans.variable} ${geistMono.variable} antialiased h-full`}>
     {children}
     </body>
     </html>

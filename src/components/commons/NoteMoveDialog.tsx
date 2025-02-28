@@ -10,6 +10,7 @@ import useGetLyrics from "@/lib/hooks/lyrics/useGetLyrics";
 import {SingleSelect} from "@/components/ui/single-select";
 import {useNotesContext} from "@/components/providers/NotesProvider";
 import usePutNote from "@/lib/hooks/notes/usePutNote";
+import useGetNotes from "@/lib/hooks/notes/useGetNotes";
 
 const NoteMoveDialog = () => {
   const {data: lyrics} = useGetLyrics();
@@ -17,6 +18,8 @@ const NoteMoveDialog = () => {
   const {trigger: putNode} = usePutNote();
 
   const {movingItem, setMovingItem} = useNotesContext();
+
+  const {data: notes} = useGetNotes({lyricId: movingItem?.item?.lyricId});
 
   const t = useScopedI18n('pages.main.dialogs.move');
 
@@ -31,9 +34,14 @@ const NoteMoveDialog = () => {
 
   const handleSubmit = useCallback(async (e: FormEvent) => {
     e.preventDefault()
-    await putNode(movingItem?.item!);
+    
+    await putNode({
+      ...movingItem?.item!,
+      lyricOrder: notes?.length || 0,
+    });
+
     setMovingItem(null)
-  }, [movingItem, putNode, setMovingItem]);
+  }, [movingItem, notes, putNode, setMovingItem]);
 
   const handleLyric = useCallback((value: string) => {
     setMovingItem({

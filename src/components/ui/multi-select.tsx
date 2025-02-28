@@ -69,14 +69,12 @@ export function MultiSelect({onChange, ...props}: MultiSelectProps) {
   }, [])
 
   return (
-    <>
+    <div className="contents" onClick={e => e.stopPropagation()}>
       <div
         ref={refs.setReference}
-        onClick={e => e.stopPropagation()}
+        onClick={() => setOpen(!open)}
         className="w-full relative flex min-h-10 cursor-pointer items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background">
-        <div
-          onClick={() => setOpen(!open)}
-          className="flex flex-wrap gap-1">
+        <div className="flex flex-wrap gap-1">
           {props.selected.length > 0 ? (
             props.selected.map((value) => {
               const selectedOption = props.options.find((option) => option.value === value)
@@ -103,7 +101,6 @@ export function MultiSelect({onChange, ...props}: MultiSelectProps) {
       {open && (
         <div
           ref={refs.setFloating}
-          onClick={e => e.stopPropagation()}
           className="rounded-lg border bg-popover shadow-md w-full p-0"
           style={{...floatingStyles, zIndex: 99999, width: 300}}>
           <Command>
@@ -129,7 +126,7 @@ export function MultiSelect({onChange, ...props}: MultiSelectProps) {
           </Command>
         </div>
       )}
-    </>
+    </div>
   )
 }
 

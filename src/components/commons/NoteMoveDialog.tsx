@@ -19,7 +19,7 @@ const NoteMoveDialog = () => {
 
   const {movingItem, setMovingItem} = useNotesContext();
 
-  const {data: notes} = useGetNotes({lyricId: movingItem?.item?.lyricId});
+  const {mutate: getNotes} = useGetNotes({lyricId: movingItem?.item?.lyricId});
 
   const t = useScopedI18n('pages.main.dialogs.move');
 
@@ -34,14 +34,15 @@ const NoteMoveDialog = () => {
 
   const handleSubmit = useCallback(async (e: FormEvent) => {
     e.preventDefault()
-    
+    const notes = await getNotes();
+
     await putNode({
       ...movingItem?.item!,
       lyricOrder: notes?.length || 0,
     });
 
     setMovingItem(null)
-  }, [movingItem, notes, putNode, setMovingItem]);
+  }, [movingItem, putNode, getNotes, setMovingItem]);
 
   const handleLyric = useCallback((value: string) => {
     setMovingItem({

@@ -1,4 +1,5 @@
 import {ChevronLeft} from "lucide-react";
+import * as React from "react";
 import {useCallback, useMemo, useState} from "react";
 import {v4 as uuid} from "uuid";
 import {useAppContext} from "@/components/providers/AppProvider";
@@ -9,10 +10,6 @@ import {searchItem} from "@/lib/utils/tree";
 import {Button} from "@/components/ui/button";
 import usePutNote from "@/lib/hooks/notes/usePutNote";
 import NotesArea from "@/components/commons/NotesArea";
-import * as React from "react";
-import NoteEditDialog from "@/components/commons/NoteEditDialog";
-import NoteRemoveDialog from "@/components/commons/NoteRemoveDialog";
-import NoteMoveDialog from "@/components/commons/NoteMoveDialog";
 
 const LyricSection = () => {
   const {lyricId, setLyricId} = useAppContext();
@@ -61,10 +58,6 @@ const LyricSection = () => {
           setContent={setContent}
           onSend={handleSendMessage}/>
       )}
-
-      <NoteEditDialog />
-      <NoteRemoveDialog />
-      <NoteMoveDialog />
     </Section>
   );
 }

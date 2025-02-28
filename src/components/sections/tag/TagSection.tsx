@@ -8,9 +8,6 @@ import {useAppContext} from "@/components/providers/AppProvider";
 import {Button} from "@/components/ui/button";
 import usePutNote from "@/lib/hooks/notes/usePutNote";
 import NotesArea from "@/components/commons/NotesArea";
-import NoteEditDialog from "@/components/commons/NoteEditDialog";
-import NoteRemoveDialog from "@/components/commons/NoteRemoveDialog";
-import NoteMoveDialog from "@/components/commons/NoteMoveDialog";
 
 const TagSection = () => {
   const {tag, setTag} = useAppContext();
@@ -52,12 +49,8 @@ const TagSection = () => {
           setContent={setContent}
           onSend={handleSendMessage}/>
       )}
-
-      <NoteEditDialog />
-      <NoteRemoveDialog />
-      <NoteMoveDialog />
     </Section>
-);
+  );
 }
 
 export default TagSection;

@@ -8,6 +8,10 @@ import LyricSection from "@/components/sections/lyric/LyricSection";
 import {useAppContext} from "@/components/providers/AppProvider";
 import TreeProvider from "@/components/providers/TreeProvider";
 import NotesProvider from "@/components/providers/NotesProvider";
+import NoteEditDialog from "@/components/commons/NoteEditDialog";
+import NoteRemoveDialog from "@/components/commons/NoteRemoveDialog";
+import NoteMoveDialog from "@/components/commons/NoteMoveDialog";
+import * as React from "react";
 
 const MainPage = () => {
   const {tag, lyricId} = useAppContext();
@@ -44,6 +48,10 @@ const MainPage = () => {
         <div className={lyricClass}>
           <LyricSection/>
         </div>
+
+        <NoteEditDialog />
+        <NoteRemoveDialog />
+        <NoteMoveDialog />
       </NotesProvider>
     </div>
   );

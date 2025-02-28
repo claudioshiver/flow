@@ -27,7 +27,7 @@ export function MultiSelect({onChange, ...props}: MultiSelectProps) {
   const [open, setOpen] = React.useState(false)
 
   const {refs, floatingStyles} = useFloating({
-    open: open,
+    open,
     placement: "bottom-start",
     middleware: [
       offset(5),
@@ -92,36 +92,34 @@ export function MultiSelect({onChange, ...props}: MultiSelectProps) {
           )}
         </div>
       </div>
-      <div
-        ref={refs.setFloating}
-        className="rounded-lg border bg-popover shadow-md w-full p-0"
-        style={{
-          ...floatingStyles,
-          zIndex: 99999,
-          width: 300,
-        }}>
-        <Command>
-          <CommandInput placeholder={props.searchPlaceholder}/>
-          <CommandList>
-            <CommandEmpty>{props.emptyMessage}</CommandEmpty>
-            <CommandGroup>
-              {props.options.map((option) => {
-                const isSelected = props.selected.includes(option.value)
-                return (
-                  <CommandItem
-                    key={option.value}
-                    onSelect={() => handleSelect(option.value)}>
-                    <div className={itemClass(isSelected)}>
-                      {isSelected && <Check className="h-2 w-2"/>}
-                    </div>
-                    {option.label}
-                  </CommandItem>
-                )
-              })}
-            </CommandGroup>
-          </CommandList>
-        </Command>
-      </div>
+      {open && (
+        <div
+          ref={refs.setFloating}
+          className="rounded-lg border bg-popover shadow-md w-full p-0"
+          style={{...floatingStyles, zIndex: 99999, width: 300}}>
+          <Command>
+            <CommandInput placeholder={props.searchPlaceholder}/>
+            <CommandList>
+              <CommandEmpty>{props.emptyMessage}</CommandEmpty>
+              <CommandGroup>
+                {props.options.map((option) => {
+                  const isSelected = props.selected.includes(option.value)
+                  return (
+                    <CommandItem
+                      key={option.value}
+                      onSelect={() => handleSelect(option.value)}>
+                      <div className={itemClass(isSelected)}>
+                        {isSelected && <Check className="h-2 w-2"/>}
+                      </div>
+                      {option.label}
+                    </CommandItem>
+                  )
+                })}
+              </CommandGroup>
+            </CommandList>
+          </Command>
+        </div>
+      )}
     </>
   )
 }

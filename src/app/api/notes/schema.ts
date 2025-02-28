@@ -21,11 +21,11 @@ const NoteSchema = function (
     noteId: yup.string().label(labels.noteId).required(),
     lyricId: yup.string().label(labels.lyricId).optional(),
     lyricOrder: yup.number().label(labels.lyricOrder).optional(),
-    content: yup.string().label(labels.content).required(),
+    content: yup.string().min(2).label(labels.content).required(),
     createdAt: yup.string().label(labels.createdAt).optional(),
     tags: yup.array().of(
       yup.string()
-    ).label(labels.tags).required()
+    ).min(1).label(labels.tags).required()
   }).required();
 };
 

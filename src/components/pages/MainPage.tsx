@@ -17,25 +17,25 @@ const MainPage = () => {
   const {tag, lyricId} = useAppContext();
 
   const treeClass = useMemo(() => (
-    cn('h-[100dvh] col-span-6 lg:col-span-2 xl:col-span-1 lg:block lg:border-r', {
+    cn('h-[100dvh] col-span-12 lg:col-span-3 xl:col-span-2 lg:block lg:border-r', {
       'hidden': tag || lyricId
     })
   ), [tag, lyricId]);
 
   const tagClass = useMemo(() => (
-    cn('h-[100dvh] col-span-6 lg:col-span-2 xl:col-span-2 lg:block lg:border-r', {
+    cn('h-[100dvh] col-span-12 lg:col-span-4 xl:col-span-4 lg:block lg:border-r', {
       'hidden': !tag
     })
   ), [tag]);
 
   const lyricClass = useMemo(() => (
-    cn('h-[100dvh] col-span-6 lg:col-span-2 xl:col-span-3 lg:block', {
+    cn('h-[100dvh] col-span-12 lg:col-span-5 xl:col-span-6 lg:block', {
       'hidden': !lyricId
     })
   ), [lyricId]);
 
   return (
-    <div className="h-full grid grid-cols-6">
+    <div className="h-full grid grid-cols-12">
       <div className={treeClass}>
         <TreeProvider>
           <TreeSection/>

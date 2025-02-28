@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import {useCallback} from "react"
+import {useCallback, useEffect} from "react"
 import {Check, X} from "lucide-react"
 import {flip, offset, shift, useFloating} from "@floating-ui/react";
 
@@ -62,6 +62,12 @@ export function MultiSelect({onChange, ...props}: MultiSelectProps) {
     })
   ), [])
 
+  useEffect(() => {
+    const close = () => setOpen(false)
+    document.body.addEventListener("click", close)
+    return () => document.body.removeEventListener("click", close)
+  }, [])
+
   return (
     <>
       <div
@@ -95,6 +101,7 @@ export function MultiSelect({onChange, ...props}: MultiSelectProps) {
       {open && (
         <div
           ref={refs.setFloating}
+          onClick={e => e.stopPropagation()}
           className="rounded-lg border bg-popover shadow-md w-full p-0"
           style={{...floatingStyles, zIndex: 99999, width: 300}}>
           <Command>

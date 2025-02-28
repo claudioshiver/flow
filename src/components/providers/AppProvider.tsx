@@ -1,7 +1,9 @@
 'use client';
 
 import type {ReactNode} from 'react';
-import {createContext, useContext, useMemo, useState} from 'react';
+import {createContext, useContext, useMemo} from 'react';
+import {useSessionStorage} from "usehooks-ts";
+import StoredVariable from "@/lib/enums/StoredVariable";
 
 export type AppContextType = {
   tag?: string,
@@ -18,8 +20,8 @@ const AppContext = createContext<AppContextType>({
 });
 
 const AppProvider = function ({children}: { children: ReactNode }) {
-  const [tag, setTag] = useState<string | undefined>();
-  const [lyricId, setLyricId] = useState<string | undefined>();
+  const [tag, setTag] = useSessionStorage<string | undefined>(StoredVariable.SELECTED_TAG, undefined);
+  const [lyricId, setLyricId] = useSessionStorage<string | undefined>(StoredVariable.SELECTED_LYRIC_ID, undefined);
 
   const context = useMemo(() => ({
     tag,

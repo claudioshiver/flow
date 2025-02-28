@@ -2,7 +2,9 @@
 
 import type {ReactNode} from 'react';
 import {createContext, useContext, useMemo, useState} from 'react';
+import {useSessionStorage} from "usehooks-ts";
 import {TreeNodeItem} from "@/lib/types/Tree";
+import StoredVariable from "@/lib/enums/StoredVariable";
 
 type EditingItem = {
   category: 'lyric' | 'tag'
@@ -44,7 +46,7 @@ const TreeContext = createContext<TreeContextType>({
 });
 
 const TreeProvider = function ({children}: { children: ReactNode }) {
-  const [openItems, setOpenItems] = useState<Record<string, boolean>>({});
+  const [openItems, setOpenItems] = useSessionStorage<Record<string, boolean>>(StoredVariable.OPEN_ITEMS, {});
   const [isAddingNote, setIsAddingNote] = useState(false);
 
   const [renamingItem, setRenamingItem] = useState<EditingItem | null>(null);

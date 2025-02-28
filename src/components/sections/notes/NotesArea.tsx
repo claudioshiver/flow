@@ -25,7 +25,7 @@ const NotesArea = ({notes, category, content, setContent, onSend}: NotesAreaProp
 
   return (
     <div className="h-full flex flex-col">
-      <div className="flex-1 overflow-y-auto p-2 space-y-2">
+      <div className="flex-1 overflow-y-auto p-2 space-y-1">
         {notes?.map((note, index) => (
           <NoteItem
             key={index}

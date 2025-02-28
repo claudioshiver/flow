@@ -14,9 +14,9 @@ type NoteItemProps = {
 
 const NoteItem = ({note, category, index, last}: NoteItemProps) => {
   return (
-    <div className="bg-muted py-2 px-4 rounded flex flex-col gap-2">
+    <div className="bg-muted py-1 px-2 rounded flex flex-col gap-1">
       <div className="flex gap-2">
-        <pre className="flex-1 whitespace-pre-wrap break-words text-sm font-sans font-normal">
+        <pre className="flex-1 whitespace-pre-wrap break-words text-xs font-sans font-normal">
           {note.content}
         </pre>
         <NoteDropdown
@@ -26,11 +26,13 @@ const NoteItem = ({note, category, index, last}: NoteItemProps) => {
           item={note}/>
       </div>
       {(note.tags?.length > 0) && (
-        <div className="flex flex-wrap justify-end items-center gap-1">
+        <div className="flex flex-wrap justify-end items-center gap-2">
           {note.tags.map((tag, index) => (
-            <Badge key={index} variant="outline" className="bg-white">
+            <div
+              key={index}
+              className="text-[0.65rem] leading-[0.7rem] font-semibold text-primary focus:outline-none">
               {tag}
-            </Badge>
+            </div>
           ))}
         </div>
       )}

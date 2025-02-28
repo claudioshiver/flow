@@ -80,7 +80,7 @@ const NoteDropdown = ({item, category, index, last}: NoteDropdownProps) => {
             })
           }}>
             <ArrowRightToLine/>
-            {t('dropdown.use')} ({lyricOrder})
+            {t('dropdown.use')}
           </DropdownMenuItem>
         )}
         {(item.lyricId && index !== 0) && (
@@ -92,7 +92,7 @@ const NoteDropdown = ({item, category, index, last}: NoteDropdownProps) => {
             ])
           }}>
             <ChevronUp/>
-            {t('dropdown.moveUp')} ({notes![index - 1].lyricOrder})
+            {t('dropdown.moveUp')}
           </DropdownMenuItem>
 
         )}
@@ -105,7 +105,7 @@ const NoteDropdown = ({item, category, index, last}: NoteDropdownProps) => {
             ])
           }}>
             <ChevronDown/>
-            {t('dropdown.moveDown')} ({notes![index + 1].lyricOrder})
+            {t('dropdown.moveDown')}
           </DropdownMenuItem>
         )}
         <DropdownMenuItem onClick={e => {

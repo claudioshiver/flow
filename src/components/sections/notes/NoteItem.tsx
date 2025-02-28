@@ -29,18 +29,11 @@ const NoteItem = ({note, category, index, last}: NoteItemProps) => {
           </div>
         )}
       </div>
-      <div className="flex flex-col gap-3">
-        <NoteDropdown
-          index={index}
-          last={last}
-          category={category}
-          item={note}/>
-        {note.lyricId && (
-          <div>
-            ({note.lyricOrder})
-          </div>
-        )}
-      </div>
+      <NoteDropdown
+        index={index}
+        last={last}
+        category={category}
+        item={note}/>
     </div>
   );
 }

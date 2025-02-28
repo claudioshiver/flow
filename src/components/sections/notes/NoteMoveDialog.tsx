@@ -75,7 +75,7 @@ const NoteMoveDialog = () => {
               options={lyricsOptions}/>
           </div>
           <Button type="submit">
-            {t('submit')} ({lyricOrder})
+            {t('submit')}
           </Button>
         </form>
       </DialogContent>

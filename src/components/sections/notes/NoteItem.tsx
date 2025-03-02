@@ -3,6 +3,8 @@
 import * as React from "react";
 import {Note} from "@/lib/types/Note";
 import NoteDropdown from "@/components/sections/notes/NoteDropdown";
+import {Star} from "lucide-react";
+import {MAX_RATE} from "@/lib/constants";
 
 type NoteItemProps = {
   note: Note;
@@ -24,17 +26,17 @@ const NoteItem = ({note, category, index, last}: NoteItemProps) => {
           category={category}
           item={note}/>
       </div>
-      {(note.tags?.length > 0) && (
-        <div className="flex flex-wrap justify-end items-center gap-2">
-          {note.tags.map((tag, index) => (
-            <div
-              key={index}
-              className="text-[0.65rem] leading-[0.7rem] text-gray-400 font-semibold focus:outline-none">
-              {tag}
-            </div>
+      <div
+        className="flex flex-wrap justify-end items-center gap-2 text-[0.65rem] leading-[0.7rem] text-gray-400 font-semibold">
+        {note.tags?.map((tag, index) => (
+          <div key={index}>{tag}</div>
+        ))}
+        <div className="inline-flex items-center gap-1">
+          {Array.from({length: MAX_RATE}).map((tag, index) => (
+            <Star key={index} fill={index < note.rate ? 'currentColor' : 'none'}/>
           ))}
         </div>
-      )}
+      </div>
     </div>
   );
 }

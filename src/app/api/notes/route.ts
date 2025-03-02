@@ -43,6 +43,7 @@ export async function POST(request: NextRequest) {
     lyricOrder: t('lyricOrder'),
     content: t('content'),
     createdAt: t('createdAt'),
+    rate: t('rate'),
     tags: t('tags'),
   }, locale as Locale)
 

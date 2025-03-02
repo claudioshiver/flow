@@ -11,6 +11,8 @@ import {Textarea} from "@/components/ui/textarea";
 import {MultiSelect} from "@/components/ui/multi-select";
 import {flattenTree} from "@/lib/utils/tree";
 import {useNotesContext} from "@/components/providers/NotesProvider";
+import StarRating from "@/components/ui/star-rating";
+import {MAX_RATE} from "@/lib/constants";
 
 const NoteEditDialog = () => {
   const {data: tags} = useGetTags();
@@ -43,6 +45,16 @@ const NoteEditDialog = () => {
       item: {
         ...editingItem?.item!,
         tags: value
+      }
+    })
+  }, [editingItem, setEditingItem]);
+
+  const handleRate = useCallback((value: number) => {
+    setEditingItem({
+      ...editingItem!,
+      item: {
+        ...editingItem?.item!,
+        rate: value
       }
     })
   }, [editingItem, setEditingItem]);
@@ -83,6 +95,13 @@ const NoteEditDialog = () => {
               selected={editingItem?.item?.tags || []}
               onChange={handleTags}
               options={tagsOptions}/>
+          </div>
+          <div className="grid gap-2">
+            <Label htmlFor="rate">{t('rate')}</Label>
+            <StarRating
+              value={editingItem?.item?.rate || 1}
+              onChange={handleRate}
+              max={MAX_RATE}/>
           </div>
           <Button type="submit">{t('submit')}</Button>
         </form>

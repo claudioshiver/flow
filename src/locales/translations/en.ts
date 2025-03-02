@@ -42,6 +42,7 @@ const en = {
             title: 'Add note',
             content: 'Content',
             tags: 'Tags',
+            rate: 'Rate',
             submit: 'Add',
             placeholder: 'Select tags',
             searchPlaceholder: 'Search tags',
@@ -62,6 +63,7 @@ const en = {
             title: 'Edit note',
             content: 'Content',
             tags: 'Tags',
+            rate: 'Rate',
             submit: 'Save',
             placeholder: 'Select tags',
             searchPlaceholder: 'Search tags',
@@ -102,6 +104,7 @@ const en = {
       lyricOrder: 'Lyric Order',
       content: 'Content',
       createdAt: 'Creation Date',
+      rate: 'Rate',
       tags: 'Tags',
     }
   }

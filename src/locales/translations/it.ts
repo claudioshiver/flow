@@ -41,6 +41,7 @@ const it = {
           add: {
             title: 'Aggiungi nota',
             content: 'Contenuto',
+            rate: 'Voto',
             tags: 'Tags',
             submit: 'Aggiungi',
             placeholder: 'Seleziona tags',
@@ -61,6 +62,7 @@ const it = {
           edit: {
             title: 'Modifica nota',
             content: 'Contenuto',
+            rate: 'Voto',
             tags: 'Tags',
             submit: 'Salva',
             placeholder: 'Seleziona tags',
@@ -102,6 +104,7 @@ const it = {
       lyricOrder: 'Ordine Testo',
       content: 'Contenuto',
       createdAt: 'Data Creazione',
+      rate: 'Voto',
       tags: 'Tags',
     }
   }

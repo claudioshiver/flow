@@ -8,6 +8,7 @@ export const NoteSchemaLabels = {
   lyricOrder: '',
   content: '',
   createdAt: '',
+  rate: '',
   tags: '',
 };
 
@@ -23,9 +24,13 @@ const NoteSchema = function (
     lyricOrder: yup.number().label(labels.lyricOrder).optional(),
     content: yup.string().min(2).label(labels.content).required(),
     createdAt: yup.string().label(labels.createdAt).optional(),
-    tags: yup.array().of(
-      yup.string()
-    ).min(1).label(labels.tags).required()
+    rate: yup.number().min(1).max(5).label(labels.rate).optional(),
+    tags: yup.array().of(yup.string())
+      .label(labels.tags)
+      .required()
+      .when('lyricId', ([lyricId], schema) => (
+        !!lyricId ? schema : schema.min(1)
+      ))
   }).required();
 };
 

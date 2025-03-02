@@ -33,7 +33,7 @@ export async function getNotesByTag(userId: string, tag: string) {
   do {
     const command = new QueryCommand({
       TableName: `${APP_SLUG}-notes`,
-      IndexName: "UserIdCreatedAtIndex",
+      IndexName: "UserIdSortOrderIndex",
       KeyConditionExpression: "userId = :uid",
       FilterExpression: "contains(tags, :tag) AND attribute_not_exists(lyricId)",
       ExpressionAttributeValues: {
@@ -89,15 +89,21 @@ export async function getNotesByLyric(userId: string, lyricId: string) {
 }
 
 export async function putNote(userId: string, note: NoteInput) {
+  const updatedAt = new Date().toISOString();
+  const rate = note.rate || 1;
+
   const item = marshall({
     id: `${userId}:${note.noteId}`,
     userId: userId,
     noteId: note.noteId,
     tags: `|${note.tags.join("|")}|`,
     content: note.content,
-    createdAt: note.createdAt || new Date().toISOString(),
+    createdAt: note.createdAt || updatedAt,
+    updatedAt,
+    rate,
     lyricId: note.lyricId,
-    lyricOrder: note.lyricOrder
+    lyricOrder: note.lyricOrder,
+    sortOrder: `${rate}:${updatedAt}`,
   }, {removeUndefinedValues: true});
 
   const command = new PutItemCommand({

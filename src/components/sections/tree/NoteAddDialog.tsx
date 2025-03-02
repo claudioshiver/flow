@@ -12,6 +12,8 @@ import {Textarea} from "@/components/ui/textarea";
 import {MultiSelect} from "@/components/ui/multi-select";
 import {flattenTree} from "@/lib/utils/tree";
 import {useTreeContext} from "@/components/providers/TreeProvider";
+import StarRating from "@/components/ui/star-rating";
+import {MAX_RATE} from "@/lib/constants";
 
 const NoteAddDialog = () => {
   const {data: tags} = useGetTags();
@@ -24,6 +26,7 @@ const NoteAddDialog = () => {
   const [formData, setFormData] = useState({
     content: "",
     tags: [] as string[],
+    rate: 1,
   })
 
   const tagsOptions = useMemo(()=> (
@@ -39,7 +42,7 @@ const NoteAddDialog = () => {
         ...formData,
       });
 
-      setFormData({content: "", tags: []})
+      setFormData({content: "", tags: [], rate: 1})
       setIsAddingNote(false)
     }
   }, [formData, putNote, setIsAddingNote]);
@@ -48,6 +51,13 @@ const NoteAddDialog = () => {
     setFormData((prev) => ({
       ...prev,
       tags: value
+    }))
+  }, []);
+
+  const handleRate = useCallback((value: number) => {
+    setFormData((prev) => ({
+      ...prev,
+      rate: value
     }))
   }, []);
 
@@ -84,6 +94,13 @@ const NoteAddDialog = () => {
               selected={formData.tags}
               onChange={handleTags}
               options={tagsOptions}/>
+          </div>
+          <div className="grid gap-2">
+            <Label htmlFor="rate">{t('rate')}</Label>
+            <StarRating
+              value={formData.rate}
+              onChange={handleRate}
+              max={MAX_RATE}/>
           </div>
           <Button type="submit">{t('submit')}</Button>
         </form>

@@ -11,27 +11,34 @@ export class DynamoDbStack extends Stack {
       tableName: `${APP_SLUG}-tags`,
       partitionKey: { name: 'id', type: AttributeType.STRING },
       billingMode: BillingMode.PAY_PER_REQUEST,
-      removalPolicy: RemovalPolicy.DESTROY,
+      removalPolicy: RemovalPolicy.RETAIN,
     });
 
     new Table(this, 'LyricsTable', {
       tableName: `${APP_SLUG}-lyrics`,
       partitionKey: { name: 'id', type: AttributeType.STRING },
       billingMode: BillingMode.PAY_PER_REQUEST,
-      removalPolicy: RemovalPolicy.DESTROY,
+      removalPolicy: RemovalPolicy.RETAIN,
     });
 
     const notes = new Table(this, 'NotesTable', {
       tableName: `${APP_SLUG}-notes`,
       partitionKey: { name: 'id', type: AttributeType.STRING },
       billingMode: BillingMode.PAY_PER_REQUEST,
-      removalPolicy: RemovalPolicy.DESTROY,
+      removalPolicy: RemovalPolicy.RETAIN,
     });
 
     notes.addGlobalSecondaryIndex({
       indexName: 'UserIdCreatedAtIndex',
       partitionKey: { name: 'userId', type: AttributeType.STRING },
       sortKey: { name: 'createdAt', type: AttributeType.STRING },
+      projectionType: ProjectionType.ALL,
+    });
+
+    notes.addGlobalSecondaryIndex({
+      indexName: 'UserIdSortOrderIndex',
+      partitionKey: { name: 'userId', type: AttributeType.STRING },
+      sortKey: { name: 'sortOrder', type: AttributeType.STRING },
       projectionType: ProjectionType.ALL,
     });
 

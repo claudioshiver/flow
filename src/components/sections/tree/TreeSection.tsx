@@ -30,16 +30,16 @@ const TreeSection = () => {
 
   const t = useScopedI18n('pages.main');
 
+  const handleToggle = useCallback((itemId: string, isOpen: boolean) => {
+    setOpenItems({...openItems, [itemId]: isOpen})
+  }, [openItems, setOpenItems]);
+
   const renderTreeItems = useCallback(<T extends 'lyric' | 'tag'>(
     items: TreeNodeItem<T>[],
     parentId: string | null,
     category: "lyric" | "tag",
     depth = 0,
   ) => {
-    const handleToggle = (itemId: string, isOpen: boolean) => {
-      setOpenItems({...openItems, [itemId]: isOpen})
-    }
-
     const handleClick = (itemId: string, itemType: 'folder' | 'leaf') => {
       (itemType === "leaf") && ((category === "lyric") ? setLyricId(itemId) : setTag(itemId))
     }
@@ -61,7 +61,7 @@ const TreeSection = () => {
         {item.type === "folder" && renderTreeItems(item.items || [], item.id, category, depth + 1)}
       </TreeNode>
     ))
-  }, [openItems, setLyricId, setOpenItems, setTag]);
+  }, [openItems, handleToggle, setLyricId, setTag]);
 
   return (
     <Section
@@ -77,13 +77,15 @@ const TreeSection = () => {
             <Tree>
               <TreeNode
                 isFolder
-                isOpen={true}
+                isOpen={openItems.lyrics}
+                onToggle={(isOpen) => handleToggle('lyrics', isOpen)}
                 label={<AddButton label={t('tree.lyrics')} category="lyric"/>}>
                 {renderTreeItems(lyrics || [], null, "lyric", 1)}
               </TreeNode>
               <TreeNode
                 isFolder
-                isOpen={true}
+                isOpen={openItems.tags}
+                onToggle={(isOpen) => handleToggle('tags', isOpen)}
                 label={<AddButton label={t('tree.tags')} category="tag"/>}>
                 {renderTreeItems(tags || [], null, "tag", 1)}
               </TreeNode>

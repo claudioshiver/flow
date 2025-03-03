@@ -46,7 +46,11 @@ const TreeContext = createContext<TreeContextType>({
 });
 
 const TreeProvider = function ({children}: { children: ReactNode }) {
-  const [openItems, setOpenItems] = useSessionStorage<Record<string, boolean>>(StoredVariable.OPEN_ITEMS, {});
+  const [openItems, setOpenItems] = useSessionStorage<Record<string, boolean>>(StoredVariable.OPEN_ITEMS, {
+    lyrics: true,
+    tags: true,
+  });
+
   const [isAddingNote, setIsAddingNote] = useState(false);
 
   const [renamingItem, setRenamingItem] = useState<EditingItem | null>(null);

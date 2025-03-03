@@ -31,9 +31,9 @@ const NoteItem = ({note, category, index, last}: NoteItemProps) => {
         {note.tags?.map((tag, index) => (
           <div key={index}>{tag}</div>
         ))}
-        <div className="inline-flex items-center gap-1">
+        <div className="inline-flex items-center gap-0.5">
           {Array.from({length: MAX_RATE}).map((tag, index) => (
-            <Star key={index} size={11} fill={index < note.rate ? 'currentColor' : 'none'}/>
+            <Star key={index} size={10} fill={index < note.rate ? 'currentColor' : 'none'}/>
           ))}
         </div>
       </div>

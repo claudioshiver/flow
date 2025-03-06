@@ -51,7 +51,7 @@ const NoteDropdown = ({item, category, index, last}: NoteDropdownProps) => {
         <Button
           variant="ghost"
           size="icon"
-          className="h-6 w-6 hover:bg-accent shrink-0 ml-1"
+          className="h-6 w-6 hover:bg-accent shrink-0 ml-1 -mr-1 -mt-1"
           onClick={(e) => e.stopPropagation()}>
           <MoreHorizontal className="h-4 w-4"/>
         </Button>

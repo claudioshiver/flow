@@ -9,14 +9,14 @@ export default function LoginPage() {
 
   return (
     <div className="flex h-screen w-full justify-center items-center">
-      <div className="text-center">
-        <h1 className="text-2xl font-bold mb-8">
+      <div className="text-center -mt-12">
+        <h1 className="text-2xl font-bold text-primary mb-8">
           {t('title', {name: APP_NAME})}
         </h1>
         <div className="flex flex-col gap-4">
           <button
             onClick={() => signIn("google")}
-            className="bg-red-500 text-white px-4 py-2 rounded">
+            className="bg-primary text-white px-4 py-2 rounded">
             {t('buttons.google')}
           </button>
         </div>

@@ -95,7 +95,7 @@ const TreeSection = () => {
           )}
         </div>
         <div className="border-t pt-4 pb-2">
-          <div className="flex items-center justify-center">
+          <div className="flex gap-2 items-center justify-center">
             <Button
               className="w-full"
               onClick={() => setIsAddingNote(true)}>

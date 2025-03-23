@@ -5,21 +5,33 @@ import {Note} from "@/lib/types/Note";
 import NoteDropdown from "@/components/sections/notes/NoteDropdown";
 import {Star} from "lucide-react";
 import {MAX_RATE} from "@/lib/constants";
+import {useMemo} from "react";
 
 type NoteItemProps = {
   note: Note;
   index?: number;
   last?: boolean;
+  highlight?: string;
   category?: 'lyric' | 'tag';
 }
 
-const NoteItem = ({note, category, index, last}: NoteItemProps) => {
+const NoteItem = ({note, category, index, last, highlight}: NoteItemProps) => {
+  const highlighted = useMemo(() => (
+    highlight
+      ? note.content.split(highlight).join(`<strong>${highlight}</strong>`)
+      : note.content
+  ), [note.content, highlight]);
+
+  const content = useMemo(() => (
+    highlighted.replaceAll('\n', '<br/>')
+  ), [highlighted]);
+
   return (
     <div className="bg-muted py-1 px-2 rounded flex flex-col gap-1">
       <div className="flex gap-2">
-        <pre className="flex-1 whitespace-pre-wrap break-words text-xs font-sans font-normal">
-          {note.content}
-        </pre>
+        <div
+          dangerouslySetInnerHTML={{__html: content}}
+          className="flex-1 whitespace-pre-wrap break-words text-xs font-sans font-normal" />
         {category && (
           <NoteDropdown
             index={index ?? 0}

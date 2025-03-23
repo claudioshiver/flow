@@ -13,8 +13,11 @@ const NoteSearchDialog = () => {
   const t = useScopedI18n('pages.main.notes.dialogs.search');
   const {isSearchingNote, setIsSearchingNote} = useTreeContext();
 
-  const [search, setSearch] = useDebounceValue('', 500);
-  const {data: notes} = useGetNotes({search});
+  const [search, setSearch] = useDebounceValue('', 800);
+
+  const {data: notes} = useGetNotes({
+    search: search.length < 3 ? undefined : search
+  });
 
   return (
     <Dialog open={isSearchingNote} onOpenChange={setIsSearchingNote}>
@@ -31,7 +34,7 @@ const NoteSearchDialog = () => {
             onChange={e => setSearch(e.target.value)}/>
           <div className="space-y-1">
             {notes?.map((note, index) => (
-              <NoteItem key={index} note={note} />
+              <NoteItem key={index} highlight={search} note={note} />
             ))}
           </div>
         </div>

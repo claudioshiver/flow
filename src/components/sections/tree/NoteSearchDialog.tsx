@@ -7,17 +7,24 @@ import useGetNotes from "@/lib/hooks/notes/useGetNotes";
 import {Input} from "@/components/ui/input";
 import NoteItem from "@/components/sections/notes/NoteItem";
 import * as React from "react";
+import {useCallback, useState} from "react";
 import {useDebounceValue} from "usehooks-ts";
 
 const NoteSearchDialog = () => {
   const t = useScopedI18n('pages.main.notes.dialogs.search');
   const {isSearchingNote, setIsSearchingNote} = useTreeContext();
 
-  const [search, setSearch] = useDebounceValue('', 800);
+  const [search, setSearch] = useState('')
+  const [debounced, setDebounced] = useDebounceValue('', 500)
 
   const {data: notes} = useGetNotes({
-    search: search.length < 3 ? undefined : search
+    search: debounced.length < 3 ? undefined : debounced
   });
+
+  const handleSearch = useCallback((value: string) => {
+    setSearch(value)
+    setDebounced(value)
+  }, [setDebounced]);
 
   return (
     <Dialog open={isSearchingNote} onOpenChange={setIsSearchingNote}>
@@ -31,10 +38,10 @@ const NoteSearchDialog = () => {
             name="search"
             autoComplete="off"
             value={search}
-            onChange={e => setSearch(e.target.value)}/>
+            onChange={e => handleSearch(e.target.value)}/>
           <div className="space-y-1">
             {notes?.map((note, index) => (
-              <NoteItem key={index} highlight={search} note={note} />
+              <NoteItem key={index} highlight={search} note={note}/>
             ))}
           </div>
         </div>

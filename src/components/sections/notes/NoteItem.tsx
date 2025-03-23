@@ -8,9 +8,9 @@ import {MAX_RATE} from "@/lib/constants";
 
 type NoteItemProps = {
   note: Note;
-  index: number;
-  last: boolean;
-  category: 'lyric' | 'tag';
+  index?: number;
+  last?: boolean;
+  category?: 'lyric' | 'tag';
 }
 
 const NoteItem = ({note, category, index, last}: NoteItemProps) => {
@@ -20,11 +20,13 @@ const NoteItem = ({note, category, index, last}: NoteItemProps) => {
         <pre className="flex-1 whitespace-pre-wrap break-words text-xs font-sans font-normal">
           {note.content}
         </pre>
-        <NoteDropdown
-          index={index}
-          last={last}
-          category={category}
-          item={note}/>
+        {category && (
+          <NoteDropdown
+            index={index ?? 0}
+            last={last ?? false}
+            category={category}
+            item={note}/>
+        )}
       </div>
       <div
         className="flex flex-wrap justify-end items-center gap-2 text-[0.65rem] leading-[0.7rem] text-gray-400 font-semibold">

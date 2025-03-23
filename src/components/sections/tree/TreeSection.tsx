@@ -1,7 +1,7 @@
 'use client';
 
 import {APP_NAME} from "@/lib/constants";
-import {LogOut} from "lucide-react";
+import {LogOut, Search} from "lucide-react";
 import {Button} from "@/components/ui/button";
 import {signOut} from "next-auth/react";
 import Section from "@/components/commons/Section";
@@ -20,13 +20,15 @@ import NoteAddDialog from "@/components/sections/tree/NoteAddDialog";
 import {useTreeContext} from "@/components/providers/TreeProvider";
 import NodeRenameDialog from "@/components/sections/tree/NodeRenameDialog";
 import NodeMoveDialog from "@/components/sections/tree/NodeMoveDialog";
+import NoteSearchDialog from "@/components/sections/tree/NoteSearchDialog";
+import * as React from "react";
 
 const TreeSection = () => {
   const {data: tags, isLoading: isLoadingTags} = useGetTags();
   const {data: lyrics, isLoading: isLoadingLyrics} = useGetLyrics();
 
   const {setLyricId, setTag} = useAppContext();
-  const {openItems, setOpenItems, setIsAddingNote} = useTreeContext();
+  const {openItems, setOpenItems, setIsAddingNote, setIsSearchingNote} = useTreeContext();
 
   const t = useScopedI18n('pages.main');
 
@@ -93,11 +95,16 @@ const TreeSection = () => {
           )}
         </div>
         <div className="border-t pt-4 pb-2">
-          <Button
-            className="w-full"
-            onClick={() => setIsAddingNote(true)}>
-            {t('notes.dialogs.add.title')}
-          </Button>
+          <div className="flex items-center justify-center">
+            <Button
+              className="w-full"
+              onClick={() => setIsAddingNote(true)}>
+              {t('notes.dialogs.add.title')}
+            </Button>
+            <Button onClick={() => setIsSearchingNote(true)}>
+              <Search className="h-4 w-4"/>
+            </Button>
+          </div>
         </div>
       </div>
 
@@ -107,6 +114,7 @@ const TreeSection = () => {
       <NodeRemoveDialog />
 
       <NoteAddDialog />
+      <NoteSearchDialog />
     </Section>
   );
 }

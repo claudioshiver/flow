@@ -20,6 +20,8 @@ export type TreeContextType = {
   setOpenItems: (openItems: Record<string, boolean>) => void
   isAddingNote: boolean
   setIsAddingNote: (isAddingNote: boolean) => void
+  isSearchingNote: boolean
+  setIsSearchingNote: (isSearchingNote: boolean) => void
   removingItem: EditingItem | null
   setRemovingItem: (removingItem: EditingItem | null) => void
   renamingItem: EditingItem | null
@@ -35,6 +37,8 @@ const TreeContext = createContext<TreeContextType>({
   setOpenItems: () => undefined,
   isAddingNote: false,
   setIsAddingNote: () => undefined,
+  isSearchingNote: false,
+  setIsSearchingNote: () => undefined,
   removingItem: null,
   setRemovingItem: () => undefined,
   renamingItem: null,
@@ -52,6 +56,7 @@ const TreeProvider = function ({children}: { children: ReactNode }) {
   });
 
   const [isAddingNote, setIsAddingNote] = useState(false);
+  const [isSearchingNote, setIsSearchingNote] = useState(false);
 
   const [renamingItem, setRenamingItem] = useState<EditingItem | null>(null);
   const [movingItem, setMovingItem] = useState<MovingItem | null>(null);
@@ -63,6 +68,8 @@ const TreeProvider = function ({children}: { children: ReactNode }) {
     setOpenItems,
     isAddingNote,
     setIsAddingNote,
+    isSearchingNote,
+    setIsSearchingNote,
     removingItem,
     setRemovingItem,
     renamingItem,
@@ -71,7 +78,7 @@ const TreeProvider = function ({children}: { children: ReactNode }) {
     setMovingItem,
     addingItem,
     setAddingItem,
-  }), [openItems, setOpenItems, isAddingNote, removingItem, renamingItem, movingItem, addingItem]);
+  }), [openItems, setOpenItems, isAddingNote, isSearchingNote, removingItem, renamingItem, movingItem, addingItem]);
 
   return (
     <TreeContext.Provider value={context}>

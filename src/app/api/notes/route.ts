@@ -2,7 +2,7 @@ import {NextRequest, NextResponse} from "next/server";
 import {getServerSession} from "next-auth";
 import authOptions from "@/lib/auth";
 import {NextSession} from "@/lib/types/Session";
-import {deleteNote, getNotesByLyric, getNotesByTag, putNote} from "@/app/api/notes/db";
+import {deleteNote, getNotesByLyric, getNotesByTag, putNote, searchNotes} from "@/app/api/notes/db";
 import {getCurrentLocale, getScopedI18n} from "@/locales/lib/server";
 import Locale from "@/lib/enums/Locale";
 import {NoteInput} from "@/lib/types/Note";
@@ -12,16 +12,19 @@ export async function GET(request: NextRequest) {
   const session: NextSession | null = await getServerSession(authOptions);
   const tag = request.nextUrl.searchParams.get("tag");
   const lyricId = request.nextUrl.searchParams.get("lyricId");
+  const search = request.nextUrl.searchParams.get("search");
 
   if (!session?.user?.id) {
     return NextResponse.json({error: "Unauthorized"}, {status: 401});
   }
 
-  const notes = !!lyricId
-    ? await getNotesByLyric(session.user.id, lyricId)
-    : !!tag
-      ? await getNotesByTag(session.user.id, tag)
-      : [];
+  const notes = !!search
+  ? await searchNotes(session.user.id, search)
+    : !!lyricId
+      ? await getNotesByLyric(session.user.id, lyricId)
+      : !!tag
+        ? await getNotesByTag(session.user.id, tag)
+        : [];
 
   return NextResponse.json(notes);
 }

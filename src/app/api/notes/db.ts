@@ -88,6 +88,37 @@ export async function getNotesByLyric(userId: string, lyricId: string) {
   return items;
 }
 
+export async function searchNotes(userId: string, search: string) {
+  let items: Note[] = [];
+  let lastEvaluatedKey: any = undefined;
+
+  do {
+    const command = new QueryCommand({
+      TableName: `${APP_SLUG}-notes`,
+      IndexName: "UserIdSortOrderIndex", // Query su userId + lyricId
+      KeyConditionExpression: "userId = :uid",
+      FilterExpression: "contains(content, :content)",
+      ExpressionAttributeValues: {
+        ":uid": {S: userId},
+        ":content": {S: search}
+      },
+      ScanIndexForward: true, // ASC
+      ExclusiveStartKey: lastEvaluatedKey
+    });
+
+    const response = await client.send(command);
+
+    if (response.Items) {
+      items = mapNotes(items, response);
+    }
+
+    lastEvaluatedKey = response.LastEvaluatedKey;
+
+  } while (lastEvaluatedKey);
+
+  return items;
+}
+
 export async function putNote(userId: string, note: NoteInput) {
   const updatedAt = new Date().toISOString();
   const rate = note.rate || 1;

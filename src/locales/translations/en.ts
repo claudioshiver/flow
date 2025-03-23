@@ -38,6 +38,9 @@ const en = {
       },
       notes: {
         dialogs: {
+          search: {
+            title: 'Search note'
+          },
           add: {
             title: 'Add note',
             content: 'Content',

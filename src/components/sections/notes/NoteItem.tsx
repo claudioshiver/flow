@@ -35,8 +35,7 @@ const NoteItem = ({note, category, index, last, highlight}: NoteItemProps) => {
 
   const noteClass = useMemo(() => (
     cn('bg-muted py-1 px-2 rounded flex flex-col gap-1 border', {
-      'border-muted': !noteId || noteId !== note.noteId,
-      'border-primary': noteId === note.noteId,
+      'ring-2 ring-primary/50': noteId === note.noteId,
     })
   ), [note, noteId]);
 

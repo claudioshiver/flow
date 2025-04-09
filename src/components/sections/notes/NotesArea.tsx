@@ -6,7 +6,6 @@ import {Textarea} from "@/components/ui/textarea";
 import {Button} from "@/components/ui/button";
 import NoteItem from "@/components/sections/notes/NoteItem";
 import {Note} from "@/lib/types/Note";
-import {useScrollContext} from "@/components/providers/ScrollProvider";
 import AutoScrollItem from "@/components/commons/AutoScrollItem";
 
 type NotesAreaProps = {
@@ -18,11 +17,9 @@ type NotesAreaProps = {
 }
 
 const NotesArea = ({notes, category, content, setContent, onSend}: NotesAreaProps) => {
-  const { containerRef } = useScrollContext();
-
   return (
     <div className="h-full flex flex-col">
-      <div ref={containerRef} className="flex-1 overflow-y-auto p-2 space-y-1">
+      <div className="flex-1 overflow-y-auto p-2 space-y-1">
         {notes?.map((note, index) => (
           <NoteItem
             key={index}

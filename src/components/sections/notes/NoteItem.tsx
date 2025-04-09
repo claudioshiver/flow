@@ -1,6 +1,6 @@
 'use client';
 
-import {MouseEvent, useLayoutEffect} from "react";
+import {MouseEvent} from "react";
 import {Note} from "@/lib/types/Note";
 import NoteDropdown from "@/components/sections/notes/NoteDropdown";
 import {Star} from "lucide-react";
@@ -10,7 +10,6 @@ import useGetLyrics from "@/lib/hooks/lyrics/useGetLyrics";
 import {useAppContext} from "@/components/providers/AppProvider";
 import cn from "classnames";
 import {useTreeContext} from "@/components/providers/TreeProvider";
-import {useScrollContext} from "@/components/providers/ScrollProvider";
 
 type NoteItemProps = {
   note: Note;
@@ -24,7 +23,6 @@ const NoteItem = ({note, category, index, last, highlight}: NoteItemProps) => {
   const { data: lyrics } = useGetLyrics();
   const { noteId, setLyricNoteId, setTagNoteId } = useAppContext();
   const { setIsSearchingNote } = useTreeContext();
-  const { targetRef, scrollIntoView } = useScrollContext();
 
   const highlighted = useMemo(() => (
     highlight
@@ -60,14 +58,8 @@ const NoteItem = ({note, category, index, last, highlight}: NoteItemProps) => {
     setIsSearchingNote(false)
   }, [note, highlight, setLyricNoteId, setTagNoteId, setIsSearchingNote]);
 
-  useLayoutEffect(() => {
-    if(note.noteId === noteId) {
-      setTimeout(scrollIntoView, 1000);
-    }
-  })
-
   return (
-    <div ref={targetRef} onClick={handleClick} className={noteClass}>
+    <div onClick={handleClick} className={noteClass}>
       <div className="flex gap-2">
         <div
           dangerouslySetInnerHTML={{__html: content}}

@@ -1,5 +1,6 @@
 'use client';
 
+import * as React from "react";
 import {useMemo} from "react";
 import cn from "classnames";
 import TreeSection from "@/components/sections/tree/TreeSection";
@@ -11,7 +12,6 @@ import NotesProvider from "@/components/providers/NotesProvider";
 import NoteEditDialog from "@/components/sections/notes/NoteEditDialog";
 import NoteRemoveDialog from "@/components/sections/notes/NoteRemoveDialog";
 import NoteMoveDialog from "@/components/sections/notes/NoteMoveDialog";
-import * as React from "react";
 
 const MainPage = () => {
   const {tag, lyricId} = useAppContext();
@@ -36,23 +36,23 @@ const MainPage = () => {
 
   return (
     <div className="h-full grid grid-cols-12">
-      <div className={treeClass}>
-        <TreeProvider>
+      <TreeProvider>
+        <div className={treeClass}>
           <TreeSection/>
-        </TreeProvider>
-      </div>
-      <NotesProvider>
-        <div className={tagClass}>
-          <TagSection/>
         </div>
-        <div className={lyricClass}>
-          <LyricSection/>
-        </div>
+        <NotesProvider>
+          <div className={tagClass}>
+            <TagSection/>
+          </div>
+          <div className={lyricClass}>
+            <LyricSection/>
+          </div>
 
-        <NoteEditDialog />
-        <NoteRemoveDialog />
-        <NoteMoveDialog />
-      </NotesProvider>
+          <NoteEditDialog/>
+          <NoteRemoveDialog/>
+          <NoteMoveDialog/>
+        </NotesProvider>
+      </TreeProvider>
     </div>
   );
 }

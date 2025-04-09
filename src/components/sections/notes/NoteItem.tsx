@@ -9,6 +9,8 @@ import {useCallback, useMemo} from "react";
 import useGetLyrics from "@/lib/hooks/lyrics/useGetLyrics";
 import {useAppContext} from "@/components/providers/AppProvider";
 import cn from "classnames";
+import {useTreeContext} from "@/components/providers/TreeProvider";
+import useScrollIntoView from "@/lib/hooks/useScrollIntoView";
 
 type NoteItemProps = {
   note: Note;
@@ -21,6 +23,9 @@ type NoteItemProps = {
 const NoteItem = ({note, category, index, last, highlight}: NoteItemProps) => {
   const { data: lyrics } = useGetLyrics();
   const { noteId, setLyricNoteId, setTagNoteId } = useAppContext();
+  const { setIsSearchingNote } = useTreeContext();
+
+  const ref = useScrollIntoView(note.noteId === noteId)
 
   const highlighted = useMemo(() => (
     highlight
@@ -52,10 +57,12 @@ const NoteItem = ({note, category, index, last, highlight}: NoteItemProps) => {
     } else {
       setTagNoteId(note.tags[0], note.noteId);
     }
-  }, [note, highlight, setLyricNoteId, setTagNoteId]);
+
+    setIsSearchingNote(false)
+  }, [note, highlight, setLyricNoteId, setTagNoteId, setIsSearchingNote]);
 
   return (
-    <div onClick={handleClick} className={noteClass}>
+    <div ref={ref} onClick={handleClick} className={noteClass}>
       <div className="flex gap-2">
         <div
           dangerouslySetInnerHTML={{__html: content}}

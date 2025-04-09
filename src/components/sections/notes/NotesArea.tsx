@@ -2,11 +2,12 @@
 
 import {SendHorizontal} from "lucide-react";
 import * as React from "react";
-import {useEffect, useRef} from "react";
 import {Textarea} from "@/components/ui/textarea";
 import {Button} from "@/components/ui/button";
 import NoteItem from "@/components/sections/notes/NoteItem";
 import {Note} from "@/lib/types/Note";
+import {useScrollContext} from "@/components/providers/ScrollProvider";
+import AutoScrollItem from "@/components/commons/AutoScrollItem";
 
 type NotesAreaProps = {
   notes?: Note[];
@@ -17,15 +18,11 @@ type NotesAreaProps = {
 }
 
 const NotesArea = ({notes, category, content, setContent, onSend}: NotesAreaProps) => {
-  const endRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    endRef.current?.scrollIntoView({behavior: "instant"});
-  }, [notes]);
+  const { containerRef } = useScrollContext();
 
   return (
     <div className="h-full flex flex-col">
-      <div className="flex-1 overflow-y-auto p-2 space-y-1">
+      <div ref={containerRef} className="flex-1 overflow-y-auto p-2 space-y-1">
         {notes?.map((note, index) => (
           <NoteItem
             key={index}
@@ -34,7 +31,7 @@ const NotesArea = ({notes, category, content, setContent, onSend}: NotesAreaProp
             note={note}
             category={category}/>
         ))}
-        <div ref={endRef}/>
+        <AutoScrollItem notes={notes} />
       </div>
       <div className="border-t pt-4 pb-2 flex space-x-2">
         <Textarea

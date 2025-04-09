@@ -11,6 +11,7 @@ import {Button} from "@/components/ui/button";
 import usePutNote from "@/lib/hooks/notes/usePutNote";
 import NotesArea from "@/components/sections/notes/NotesArea";
 import {getLyricOrder} from "@/lib/utils/notes";
+import ScrollProvider from "@/components/providers/ScrollProvider";
 
 const LyricSection = () => {
   const {lyricId, setLyricId} = useAppContext();
@@ -56,12 +57,14 @@ const LyricSection = () => {
         </Button>
       }>
       {lyricId && (
-        <NotesArea
-          category="lyric"
-          notes={notes}
-          content={content}
-          setContent={setContent}
-          onSend={handleSendMessage}/>
+        <ScrollProvider>
+          <NotesArea
+            category="lyric"
+            notes={notes}
+            content={content}
+            setContent={setContent}
+            onSend={handleSendMessage}/>
+        </ScrollProvider>
       )}
     </Section>
   );

@@ -42,7 +42,6 @@ const NoteSearchDialog = () => {
           <div className="space-y-1">
             {notes?.map((note, index) => (
               <NoteItem
-                showLyric
                 key={index}
                 highlight={search}
                 note={note}/>

@@ -41,7 +41,11 @@ const NoteSearchDialog = () => {
             onChange={e => handleSearch(e.target.value)}/>
           <div className="space-y-1">
             {notes?.map((note, index) => (
-              <NoteItem key={index} highlight={search} note={note}/>
+              <NoteItem
+                showLyric
+                key={index}
+                highlight={search}
+                note={note}/>
             ))}
           </div>
         </div>

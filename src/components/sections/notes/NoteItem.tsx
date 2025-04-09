@@ -1,11 +1,14 @@
 'use client';
 
-import * as React from "react";
+import {MouseEvent} from "react";
 import {Note} from "@/lib/types/Note";
 import NoteDropdown from "@/components/sections/notes/NoteDropdown";
 import {Star} from "lucide-react";
 import {MAX_RATE} from "@/lib/constants";
-import {useMemo} from "react";
+import {useCallback, useMemo} from "react";
+import useGetLyrics from "@/lib/hooks/lyrics/useGetLyrics";
+import {useAppContext} from "@/components/providers/AppProvider";
+import cn from "classnames";
 
 type NoteItemProps = {
   note: Note;
@@ -16,18 +19,43 @@ type NoteItemProps = {
 }
 
 const NoteItem = ({note, category, index, last, highlight}: NoteItemProps) => {
+  const { data: lyrics } = useGetLyrics();
+  const { noteId, setLyricNoteId, setTagNoteId } = useAppContext();
+
   const highlighted = useMemo(() => (
     highlight
       ? note.content.split(highlight).join(`<strong>${highlight}</strong>`)
       : note.content
   ), [note.content, highlight]);
 
+  const noteClass = useMemo(() => (
+    cn('bg-muted py-1 px-2 rounded flex flex-col gap-1 border', {
+      'border-muted': !noteId || noteId !== note.noteId,
+      'border-primary': noteId === note.noteId,
+    })
+  ), [note, noteId]);
+
   const content = useMemo(() => (
     highlighted.replaceAll('\n', '<br/>')
   ), [highlighted]);
 
+  const lyricLabel = useMemo(() => (
+    lyrics?.find(lyric => lyric.id === note.lyricId)?.label
+  ), [lyrics, note]);
+
+  const handleClick = useCallback((e: MouseEvent) => {
+    e.stopPropagation();
+    if(!highlight) return;
+
+    if(note.lyricId) {
+      setLyricNoteId(note.lyricId, note.noteId);
+    } else {
+      setTagNoteId(note.tags[0], note.noteId);
+    }
+  }, [note, highlight, setLyricNoteId, setTagNoteId]);
+
   return (
-    <div className="bg-muted py-1 px-2 rounded flex flex-col gap-1">
+    <div onClick={handleClick} className={noteClass}>
       <div className="flex gap-2">
         <div
           dangerouslySetInnerHTML={{__html: content}}
@@ -40,8 +68,10 @@ const NoteItem = ({note, category, index, last, highlight}: NoteItemProps) => {
             item={note}/>
         )}
       </div>
-      <div
-        className="flex flex-wrap justify-end items-center gap-2 text-[0.65rem] leading-[0.7rem] text-gray-400 font-semibold">
+      <div className="flex flex-wrap justify-end items-center gap-2 text-[0.65rem] leading-[0.7rem] text-gray-400 font-semibold">
+        {highlight && lyricLabel && (
+          <div className="text-gray-500">{lyricLabel}</div>
+        )}
         {note.tags?.map((tag, index) => (
           <div key={index}>{tag}</div>
         ))}

@@ -1,7 +1,7 @@
 enum QueryVariable {
-  SELECTED_TAG = 'SELECTED_TAG',
-  SELECTED_LYRIC_ID = 'SELECTED_LYRIC_ID',
-  SELECTED_NOTE_ID = 'SELECTED_NOTE_ID',
+  TAG = 'tag',
+  LYRIC_ID = 'lyricId',
+  NOTE_ID = 'noteId',
 }
 
 export default QueryVariable;

@@ -31,30 +31,30 @@ const AppProvider = function ({children}: { children: ReactNode }) {
     query,
     setQuery,
   } = useQueryParams({
-    [QueryVariable.SELECTED_TAG]: new StringType(),
-    [QueryVariable.SELECTED_LYRIC_ID]: new StringType(),
-    [QueryVariable.SELECTED_NOTE_ID]: new StringType(),
+    [QueryVariable.TAG]: new StringType(),
+    [QueryVariable.LYRIC_ID]: new StringType(),
+    [QueryVariable.NOTE_ID]: new StringType(),
   })
 
   const context = useMemo(() => ({
-    tag: query[QueryVariable.SELECTED_TAG],
-    lyricId: query[QueryVariable.SELECTED_LYRIC_ID],
-    noteId: query[QueryVariable.SELECTED_NOTE_ID],
+    tag: query[QueryVariable.TAG],
+    lyricId: query[QueryVariable.LYRIC_ID],
+    noteId: query[QueryVariable.NOTE_ID],
     setTag: (tag?: string) => setQuery({
-      [QueryVariable.SELECTED_NOTE_ID]: null,
-      [QueryVariable.SELECTED_TAG]: tag
+      [QueryVariable.NOTE_ID]: null,
+      [QueryVariable.TAG]: tag
     }),
     setLyricId: (lyricId?: string) => setQuery({
-      [QueryVariable.SELECTED_NOTE_ID]: null,
-      [QueryVariable.SELECTED_LYRIC_ID]: lyricId
+      [QueryVariable.NOTE_ID]: null,
+      [QueryVariable.LYRIC_ID]: lyricId
     }),
     setTagNoteId: (tag?: string, noteId?: string) => setQuery({
-      [QueryVariable.SELECTED_NOTE_ID]: noteId,
-      [QueryVariable.SELECTED_TAG]: tag
+      [QueryVariable.NOTE_ID]: noteId,
+      [QueryVariable.TAG]: tag
     }),
     setLyricNoteId: (lyricId?: string, noteId?: string) => setQuery({
-      [QueryVariable.SELECTED_NOTE_ID]: noteId,
-      [QueryVariable.SELECTED_LYRIC_ID]: lyricId
+      [QueryVariable.NOTE_ID]: noteId,
+      [QueryVariable.LYRIC_ID]: lyricId
     }),
   }), [query, setQuery]);
 

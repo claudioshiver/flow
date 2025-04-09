@@ -35,9 +35,10 @@ const NoteItem = ({note, category, index, last, highlight}: NoteItemProps) => {
 
   const noteClass = useMemo(() => (
     cn('bg-muted py-1 px-2 rounded flex flex-col gap-1 border', {
-      'ring-2 ring-primary/50': noteId === note.noteId,
+      'ring-2 ring-primary': noteId === note.noteId,
+      'cursor-pointer': highlight,
     })
-  ), [note, noteId]);
+  ), [highlight, note, noteId]);
 
   const content = useMemo(() => (
     highlighted.replaceAll('\n', '<br/>')

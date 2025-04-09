@@ -1,9 +1,9 @@
-import {useEffect, useRef} from "react";
+import {useLayoutEffect, useRef} from "react";
 
 const useScrollIntoView = function(scroll: boolean) {
   const sectionRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (scroll && sectionRef.current) {
       sectionRef.current.scrollIntoView({ behavior: "smooth" });
     }

@@ -40,7 +40,7 @@ const NoteItem = ({note, category, index, last, highlight}: NoteItemProps) => {
   const content = useMemo(() => (
     highlighted
       .replaceAll('\n', '<br/>')
-      .replace(/\b(https?:\/\/[^\s"'<>()]+)/g, '<a href="$1" target="_blank">$1</a>')
+      .replace(/\b(https?:\/\/[^\s"'<>()]+)/g, '<a href="$1" class="text-primary" target="_blank">$1</a>')
   ), [highlighted]);
 
   const lyricLabel = useMemo(() => (

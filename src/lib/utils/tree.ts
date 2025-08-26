@@ -1,4 +1,4 @@
-import {TreeNodeFolder, TreeNodeItem} from "@/lib/types/Tree";
+import {Tree, TreeNodeFolder, TreeNodeItem} from "@/lib/types/Tree";
 
 export const addChildToParent = function<T extends "lyric" | "tag">(
   items: TreeNodeItem<T>[],
@@ -153,4 +153,20 @@ export const moveNode = function<T extends 'lyric' | 'tag'>(
   }
 
   return addNode(items);
+}
+
+export const sortTree = function<T extends 'lyric' | 'tag'>(tree: Tree<T>): Tree<T> {
+  const sortItems = (items: TreeNodeItem<T>[]): TreeNodeItem<T>[] =>
+    items
+      .map(item =>
+        item.type === 'folder'
+          ? { ...item, items: item.items ? sortItems(item.items) : [] }
+          : item
+      )
+      .sort((a, b) => {
+        if (a.type !== b.type) return a.type === 'folder' ? -1 : 1;
+        return a.label.localeCompare(b.label);
+      });
+
+  return { ...tree, items: sortItems(tree?.items || []) };
 }

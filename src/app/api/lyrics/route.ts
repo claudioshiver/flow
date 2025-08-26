@@ -7,6 +7,7 @@ import {getLyrics, updateLyrics} from "@/app/api/lyrics/db";
 import LyricsSchema from "@/app/api/lyrics/schema";
 import {getCurrentLocale, getScopedI18n} from "@/locales/lib/server";
 import Locale from "@/lib/enums/Locale";
+import {sortTree} from "@/lib/utils/tree";
 
 export async function GET() {
   const session: NextSession | null = await getServerSession(authOptions);
@@ -16,8 +17,9 @@ export async function GET() {
   }
 
   const tree = await getLyrics(session.user.id)
+  const sortedTree = tree ? sortTree(tree) : tree
 
-  return NextResponse.json(tree?.items || []);
+  return NextResponse.json(sortedTree?.items || []);
 }
 
 export async function POST(request: NextRequest) {
